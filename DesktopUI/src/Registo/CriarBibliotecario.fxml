@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Registo.CriarBibliotecarioController">
+   <children>
+      <AnchorPane layoutX="50.0" layoutY="50.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="400.0" spacing="25.0">
+               <children>
+                  <TextField fx:id="username_txt" promptText="Username">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="email_txt" promptText="Email">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="password_txt" promptText="Password">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="nome_txt" layoutX="60.0" layoutY="161.0" promptText="Nome" />
+                  <TextField fx:id="morada_txt" layoutX="60.0" layoutY="212.0" promptText="Morada" />
+                  <DatePicker fx:id="data_nascimento_picker" promptText="Data de nascimento">
+                     <VBox.margin>
+                        <Insets right="120.0" />
+                     </VBox.margin>
+                  </DatePicker>
+                  <Button fx:id="criar_bibliotecario_btn" mnemonicParsing="false" onAction="#criarBibliotecario" text="Criar conta">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin></Button>
+               </children>
+               <padding>
+                  <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
