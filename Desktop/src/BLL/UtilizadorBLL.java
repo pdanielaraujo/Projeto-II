@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -44,7 +45,7 @@ public class UtilizadorBLL {
         
     }
         
-    public static Utilizador read(int idUtilizador){
+    public static Utilizador readId(int idUtilizador){
         Utilizador utilizador = null;
         if(factory == null)
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
@@ -60,6 +61,33 @@ public class UtilizadorBLL {
         }
         else
             return null;
+        
+        
+        return utilizador;
+    }
+    
+    public static Utilizador readUsername(String usernameUtilizador){
+        Utilizador utilizador = null;
+        if(factory == null)
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        if (em == null) em = factory.createEntityManager();
+        
+        Query q1 = em.createNamedQuery("Utilizador.findByUsername");
+        q1.setParameter("username", usernameUtilizador);
+        
+        try{
+            Object obj = q1.getSingleResult();
+            if(obj != null){
+            utilizador = ((Utilizador)obj);
+            //em.merge(cli);
+        }
+        else
+            return null;
+        } catch (NoResultException nre){
+            System.out.println("Esta é a NoResultException.");
+        }
+        
+        
         
         
         return utilizador;

@@ -44,7 +44,7 @@ public class BibliotecarioBLL {
         
     }
         
-    public static Bibliotecario read(int idBibliotecario){
+    public static Bibliotecario readId(int idBibliotecario){
         Bibliotecario bibliotecario = null;
         if(factory == null)
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);

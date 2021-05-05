@@ -16,9 +16,10 @@ import javafx.stage.Stage;
  * @author Pedro
  */
 public class DesktopUI extends Application {
-    
+    public static Stage guiStage;
     @Override
     public void start(Stage stage) throws Exception {
+        guiStage = stage;
         Parent root = FXMLLoader.load(getClass().getResource("/Registo/CriarBibliotecario.fxml"));
         Scene scene = new Scene(root);
         

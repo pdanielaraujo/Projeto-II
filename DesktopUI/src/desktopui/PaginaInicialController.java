@@ -10,26 +10,35 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 /**
  *
  * @author Pedro
  */
-public class FXMLDocumentController implements Initializable {
+public class PaginaInicialController implements Initializable {
     
     @FXML
-    private Label label;
+    private Button button;
+
+    @FXML
+    private Label label_teste;
+
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
-        label.setText("Hello World!");
+        //label.setText("Hello World!");
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
+    public void receberUsername(String username){
+        label_teste.setText(username);
+    }
     
 }
