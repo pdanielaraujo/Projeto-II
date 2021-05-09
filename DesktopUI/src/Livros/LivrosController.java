@@ -9,6 +9,7 @@ import BLL.GeneroBLL;
 import BLL.LivroBLL;
 import DAL.Genero;
 import DAL.Livro;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -72,7 +73,7 @@ public class LivrosController implements Initializable {
     private DatePicker dataPublicacao_datePicker;
     
     @FXML
-    private ChoiceBox<String> choicebox_generos;
+    private ChoiceBox<Genero> choicebox_generos;
     
     @FXML
     private Button criar_livro_btn;
@@ -104,13 +105,16 @@ public class LivrosController implements Initializable {
         
         livros_table.setItems(lista_livros);
         
-        ObservableList<String> lista_generos = FXCollections.observableArrayList();
-        List<Genero> generos = GeneroBLL.readAllNomeGenero();
+        // Preencher lista de escolhas de género
+        ObservableList<Genero> lista_generos = FXCollections.observableArrayList();
+        List<Genero> generos = GeneroBLL.readAll();
         
         for(Genero generos_ : generos){
-            String nomeGenero = generos_.getNome();
-            lista_generos.add(nomeGenero);
-            System.out.println("genero: " + nomeGenero);
+            BigDecimal idGenero = generos_.getIdGenero();
+            //String nomeGenero = generos_.getNome();
+            lista_generos.add(new Genero(generos_.getIdGenero(), generos_.getNome()));
+            System.out.println("id: " + generos_.getIdGenero());
+            System.out.println("genero: " + generos_.getNome());
         }
         
         choicebox_generos.setItems(lista_generos);
@@ -133,11 +137,12 @@ public class LivrosController implements Initializable {
         
         Alert alert = new Alert(Alert.AlertType.NONE);
         Livro livro = new Livro();
+        BigDecimal idGenero = choicebox_generos.getValue().getIdGenero();
         livro.setTitulo(titulo_txt.getText());
         livro.setEditora(editora_txt.getText());
         livro.setLinguaOficial(linguaOficial_txt.getText());
         livro.setDataPublicacao(data_publicacao);
-        livro.setGeneroNome(choicebox_generos.getValue());
+        livro.setGeneroId_(idGenero);
         LivroBLL.create(livro);
         
         

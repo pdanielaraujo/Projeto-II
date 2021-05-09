@@ -23,6 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -44,7 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Livro.findByEditora", query = "SELECT l FROM Livro l WHERE l.editora = :editora")
     , @NamedQuery(name = "Livro.findByLinguaOficial", query = "SELECT l FROM Livro l WHERE l.linguaOficial = :linguaOficial")
     , @NamedQuery(name = "Livro.findLivroGenero", query = "SELECT l.titulo, l.dataPublicacao, l.editora, l.linguaOficial, g.nome FROM Livro l JOIN Genero g")})
-    
+@SequenceGenerator(name="livro_seq_pk", sequenceName = "livro_seq_pk", allocationSize = 1, initialValue = 1)
 public class Livro implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -74,8 +75,10 @@ public class Livro implements Serializable {
     @JoinColumn(name = "GENERO_ID", referencedColumnName = "ID_GENERO")
     @ManyToOne(optional = false)
     private Genero generoId;
-    //@JoinColumn(name="NOME", referencedColumnName = "NOME")
+    @JoinColumn(name = "GENERONOME", referencedColumnName = "NOME")
     private String generoNome;
+    
+    private BigDecimal generoId_;
         
     public Livro() {
     }
@@ -99,7 +102,7 @@ public class Livro implements Serializable {
         this.linguaOficial = linguaOficial;
         this.generoNome = generoNome;
     }
-
+    
     public BigDecimal getIdLivro() {
         return idLivro;
     }
@@ -164,6 +167,14 @@ public class Livro implements Serializable {
 
     public void setGeneroId(Genero generoId) {
         this.generoId = generoId;
+    }
+    
+    public BigDecimal getGeneroId_() {
+        return generoId_;
+    }
+
+    public void setGeneroId_(BigDecimal generoId_) {
+        this.generoId_ = generoId_;
     }
     
     public String getGeneroNome() {
