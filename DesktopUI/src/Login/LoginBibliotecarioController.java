@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Registo;
+package Login;
 
 import BLL.BibliotecarioBLL;
 import BLL.UtilizadorBLL;
@@ -36,7 +36,7 @@ import javafx.stage.Stage;
  *
  * @author Pedro
  */
-public class CriarBibliotecarioController implements Initializable {
+public class LoginBibliotecarioController implements Initializable {
 
     Stage stage = desktopui.DesktopUI.guiStage;
     @FXML
@@ -70,7 +70,7 @@ public class CriarBibliotecarioController implements Initializable {
     
     boolean isLogged = false;
     
-    void enviarDados(){
+    /*void enviarDados(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/desktopui/PaginaInicial.fxml"));
             Parent root = loader.load();
@@ -86,7 +86,7 @@ public class CriarBibliotecarioController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-    }
+    }*/
     
     @FXML
     void criarBibliotecario(ActionEvent event){
@@ -117,7 +117,23 @@ public class CriarBibliotecarioController implements Initializable {
             if(utilizador.getUsername().equals(username.getUsername()) && utilizador.getPassword().equals(username.getPassword())){
                 System.out.println("Credenciais inseridas corretamente.");
                 isLogged = true;
-                enviarDados();
+                //enviarDados();
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/desktopui/PaginaInicial.fxml"));
+                    Parent root = loader.load();
+   
+                    //The following both lines are the only addition we need to pass the arguments
+                    PaginaInicialController pgIniController = loader.getController();
+                    pgIniController.receberUsername(utilizador.getUsername());
+                    
+                    //stage.setScene(new Scene(root));
+                    stage.getScene().setRoot(root);
+                    //stage.setTitle("Layout2 + Controller2");
+                    stage.show();
+   
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else{
                 System.out.println("O username inserido não existe.");
                 alert.setAlertType(Alert.AlertType.ERROR);

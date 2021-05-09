@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Genero.findAll", query = "SELECT g FROM Genero g")
     , @NamedQuery(name = "Genero.findByIdGenero", query = "SELECT g FROM Genero g WHERE g.idGenero = :idGenero")
-    , @NamedQuery(name = "Genero.findByNome", query = "SELECT g FROM Genero g WHERE g.nome = :nome")})
+    , @NamedQuery(name = "Genero.findByNome", query = "SELECT g FROM Genero g WHERE g.nome = :nome")
+    , @NamedQuery(name = "Genero.findNomeGenero", query = "SELECT g.nome FROM Genero g")})
 public class Genero implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,6 +55,10 @@ public class Genero implements Serializable {
 
     public Genero(BigDecimal idGenero, String nome) {
         this.idGenero = idGenero;
+        this.nome = nome;
+    }
+    
+    public Genero(String nome) {
         this.nome = nome;
     }
 

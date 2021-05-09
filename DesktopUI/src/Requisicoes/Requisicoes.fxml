@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Requisicoes.RequisicoesController">
+   <children>
+      <TableView fx:id="requisicoes_table" layoutX="33.0" layoutY="46.0" prefHeight="450.0" prefWidth="600.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="25.0">
+        <columns>
+          <TableColumn fx:id="col_titulo" prefWidth="139.99999523162842" text="Título" />
+          <TableColumn fx:id="col_dataPublicacao" prefWidth="114.00001525878906" text="Data Publicação" />
+            <TableColumn fx:id="col_editora" prefWidth="114.6666259765625" text="Editora" />
+            <TableColumn fx:id="col_linguaOficial" prefWidth="120.0" text="Língua Oficial" />
+            <TableColumn fx:id="col_genero" prefWidth="109.33334350585938" text="Género" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

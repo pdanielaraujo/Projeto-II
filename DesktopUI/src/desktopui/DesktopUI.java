@@ -20,11 +20,13 @@ public class DesktopUI extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         guiStage = stage;
-        Parent root = FXMLLoader.load(getClass().getResource("/Registo/CriarBibliotecario.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Login/LoginBibliotecario.fxml"));
         Scene scene = new Scene(root);
         
         stage.setTitle("Biblioteca App");
         stage.setScene(scene);
+        stage.setMaximized(true);
+        stage.setResizable(true);
         stage.show();
     }
 

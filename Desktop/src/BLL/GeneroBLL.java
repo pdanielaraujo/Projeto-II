@@ -6,7 +6,6 @@
 package BLL;
 
 import DAL.Genero;
-import DAL.Livro;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,105 +18,99 @@ import javax.persistence.Query;
  *
  * @author Pedro
  */
-public class LivroBLL {
+public class GeneroBLL {
     private static final String PERSISTENCE_UNIT_NAME = "DesktopPU";
     private static EntityManagerFactory factory = null;
     private static EntityManager em = null;
     
-    public static void create(Livro livro){
+    public static void create(Genero genero){
         if(factory == null)
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         
         if (em == null) em = factory.createEntityManager();
         
         em.getTransaction().begin();
-        em.persist(livro);
+        em.persist(genero);
         em.getTransaction().commit();
     }
     
-    public static void update(Livro livro){
+    public static void update(Genero genero){
         if(factory == null)
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         if (em == null) em = factory.createEntityManager();
         
         em.getTransaction().begin();
-        em.merge(livro);
+        em.merge(genero);
         em.getTransaction().commit();
         
     }
         
-    public static Livro read(int idLivro){
-        Livro livro = null;
+    public static Genero read(int idGenero){
+        Genero genero = null;
         if(factory == null)
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         if (em == null) em = factory.createEntityManager();
         
-        Query q1 = em.createNamedQuery("Livro.findByIdLivro");
-        q1.setParameter("idlivro", idLivro);
+        Query q1 = em.createNamedQuery("Genero.findByIdGenero");
+        q1.setParameter("idgenero", idGenero);
         Object obj = q1.getSingleResult();
         
         if(obj != null){
-            livro = ((Livro)obj);
+            genero = ((Genero)obj);
             //em.merge(cli);
         }
         else
             return null;
         
         
-        return livro;
+        return genero;
     }
 
-    public static List<Livro> readAll(){
-        List<Livro> livros = new ArrayList<>();
+    public static List<Genero> readAll(){
+        List<Genero> generos = new ArrayList<>();
         
         factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         if (em == null) em = factory.createEntityManager();
         
-        Query q1 = em.createNamedQuery("Livro.findAll");
+        Query q1 = em.createNamedQuery("Genero.findAll");
         List<Object> lstObj = q1.getResultList();
         
         for(Object obj : lstObj){
-            Livro livro = ((Livro)obj);
-            livros.add(livro);
+            Genero genero = ((Genero)obj);
+            generos.add(genero);
         }        
         
-        return livros;
+        return generos;
     }
     
-    public static List<Livro> readAllWithGenero(){
-        List<Livro> livros = new ArrayList<Livro>();
+    public static List<Genero> readAllNomeGenero(){
+        List<Genero> generos = new ArrayList<>();
         
         factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         if (em == null) em = factory.createEntityManager();
         
-        Query q1 = em.createNamedQuery("Livro.findLivroGenero");
-        List<Object[]> lstObj = q1.getResultList();
+        Query q1 = em.createNamedQuery("Genero.findNomeGenero");
+        List<Object> lstObj = q1.getResultList();
         
-        for(Object[] obj : lstObj){
-            //Livro livro = ((Livro)obj);
-            Livro livro = new Livro();
-            Object[] aux = obj;
-            System.out.println(aux[4]);
-            livro.setTitulo((String) aux[0]);
-            livro.setDataPublicacao((Date) aux[1]);
-            livro.setEditora((String) aux[2]);
-            livro.setLinguaOficial((String) aux[3]);
-            livro.setGeneroNome((String) aux[4]);
-            
-            livros.add(livro);
-        }     
+        for(Object obj : lstObj){
+            //Genero genero = ((Genero)obj);
+            Genero genero = new Genero();
+            genero.setNome((String) obj);
+            System.out.println(obj);
+            generos.add(genero);
+        }        
         
-        return livros;
-    }    
+        return generos;
+    }
     
-    public static void delete(Livro livro){
+    public static void delete(Genero genero){
         if(factory == null)
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         
         if (em == null) em = factory.createEntityManager();
         
         em.getTransaction().begin();
-        em.remove(livro);
+        em.remove(genero);
         em.getTransaction().commit();
     }
 }

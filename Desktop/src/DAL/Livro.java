@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import javafx.beans.property.SimpleStringProperty;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -41,7 +42,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Livro.findByTitulo", query = "SELECT l FROM Livro l WHERE l.titulo = :titulo")
     , @NamedQuery(name = "Livro.findByDataPublicacao", query = "SELECT l FROM Livro l WHERE l.dataPublicacao = :dataPublicacao")
     , @NamedQuery(name = "Livro.findByEditora", query = "SELECT l FROM Livro l WHERE l.editora = :editora")
-    , @NamedQuery(name = "Livro.findByLinguaOficial", query = "SELECT l FROM Livro l WHERE l.linguaOficial = :linguaOficial")})
+    , @NamedQuery(name = "Livro.findByLinguaOficial", query = "SELECT l FROM Livro l WHERE l.linguaOficial = :linguaOficial")
+    , @NamedQuery(name = "Livro.findLivroGenero", query = "SELECT l.titulo, l.dataPublicacao, l.editora, l.linguaOficial, g.nome FROM Livro l JOIN Genero g")})
+    
 public class Livro implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,7 +52,7 @@ public class Livro implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "ID_LIVRO")
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_pk")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="livro_seq_pk")
     private BigDecimal idLivro;
     @Basic(optional = false)
     @Column(name = "TITULO")
@@ -71,7 +74,9 @@ public class Livro implements Serializable {
     @JoinColumn(name = "GENERO_ID", referencedColumnName = "ID_GENERO")
     @ManyToOne(optional = false)
     private Genero generoId;
-
+    //@JoinColumn(name="NOME", referencedColumnName = "NOME")
+    private String generoNome;
+        
     public Livro() {
     }
 
@@ -85,6 +90,14 @@ public class Livro implements Serializable {
         this.dataPublicacao = dataPublicacao;
         this.editora = editora;
         this.linguaOficial = linguaOficial;
+    }
+    
+    public Livro(String titulo, Date dataPublicacao, String editora, String linguaOficial, String generoNome) {
+        this.titulo = titulo;
+        this.dataPublicacao = dataPublicacao;
+        this.editora = editora;
+        this.linguaOficial = linguaOficial;
+        this.generoNome = generoNome;
     }
 
     public BigDecimal getIdLivro() {
@@ -151,6 +164,14 @@ public class Livro implements Serializable {
 
     public void setGeneroId(Genero generoId) {
         this.generoId = generoId;
+    }
+    
+    public String getGeneroNome() {
+        return generoNome;
+    }
+
+    public void setGeneroNome(String generoNome) {
+        this.generoNome = generoNome;
     }
 
     @Override
