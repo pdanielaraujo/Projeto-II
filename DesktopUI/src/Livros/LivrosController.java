@@ -13,8 +13,10 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +32,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -58,7 +61,7 @@ public class LivrosController implements Initializable {
     private TableColumn<Livro, String> col_linguaOficial;
 
     @FXML
-    private TableColumn<Livro, String> col_genero;
+    private TableColumn<Livro, Genero> col_genero;
     
     @FXML
     private TextField titulo_txt;
@@ -90,18 +93,15 @@ public class LivrosController implements Initializable {
         List<Livro> livros = LivroBLL.readAllWithGenero();
         
         for(Livro livros_ : livros){
-            String nomeGenero = livros_.getGeneroNome();
-            System.out.println("nomeGenero: " + nomeGenero);
-            lista_livros.add(new Livro(livros_.getTitulo(), livros_.getDataPublicacao(), livros_.getEditora(), livros_.getLinguaOficial(), nomeGenero));
-            System.out.println("livro: " + lista_livros);
-            break;
+            lista_livros.add(new Livro(livros_.getTitulo(), livros_.getDataPublicacao(), livros_.getEditora(), livros_.getLinguaOficial(), livros_.getGeneroId()));
+            System.out.println("Livro: " + lista_livros.toString());
         }
         
         col_titulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
         col_dataPublicacao.setCellValueFactory(new PropertyValueFactory<>("dataPublicacao"));
         col_editora.setCellValueFactory(new PropertyValueFactory<>("editora"));
         col_linguaOficial.setCellValueFactory(new PropertyValueFactory<>("linguaOficial"));
-        col_genero.setCellValueFactory(new PropertyValueFactory<>("generoNome"));
+        col_genero.setCellValueFactory(new PropertyValueFactory<>("generoId"));
         
         livros_table.setItems(lista_livros);
         
@@ -110,13 +110,12 @@ public class LivrosController implements Initializable {
         List<Genero> generos = GeneroBLL.readAll();
         
         for(Genero generos_ : generos){
-            BigDecimal idGenero = generos_.getIdGenero();
             //String nomeGenero = generos_.getNome();
             lista_generos.add(new Genero(generos_.getIdGenero(), generos_.getNome()));
-            System.out.println("id: " + generos_.getIdGenero());
-            System.out.println("genero: " + generos_.getNome());
+            lista_generos.toString();
+            //System.out.println("id: " + generos_.getIdGenero());
+            //System.out.println("genero: " + generos_.getNome());
         }
-        
         choicebox_generos.setItems(lista_generos);
         
     }    
@@ -137,17 +136,18 @@ public class LivrosController implements Initializable {
         
         Alert alert = new Alert(Alert.AlertType.NONE);
         Livro livro = new Livro();
-        BigDecimal idGenero = choicebox_generos.getValue().getIdGenero();
+        Genero idGenero = choicebox_generos.getValue();
         livro.setTitulo(titulo_txt.getText());
         livro.setEditora(editora_txt.getText());
         livro.setLinguaOficial(linguaOficial_txt.getText());
         livro.setDataPublicacao(data_publicacao);
-        livro.setGeneroId_(idGenero);
+        livro.setGeneroId(choicebox_generos.getValue());
         LivroBLL.create(livro);
+        livros_table.refresh();
         
         
         
-        System.out.println("nome genero: " + livro.getGeneroNome());
+        System.out.println("nome genero: " + livro.getGeneroId().getNome());
         System.out.println("titulo: " + livro.getTitulo());
         System.out.println("data_publicacao: " + data_publicacao);
     }

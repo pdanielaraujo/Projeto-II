@@ -77,6 +77,11 @@ public class Genero implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+    
+    /*@Override
+    public String toString(){
+        return this.getNome();
+    }*/
 
     @XmlTransient
     public List<Livro> getLivroList() {
@@ -109,7 +114,7 @@ public class Genero implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.Genero[ idGenero=" + idGenero + " ]";
+        return this.getNome();
     }
     
 }

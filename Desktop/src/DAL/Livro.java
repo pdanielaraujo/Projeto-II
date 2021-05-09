@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Livro.findByDataPublicacao", query = "SELECT l FROM Livro l WHERE l.dataPublicacao = :dataPublicacao")
     , @NamedQuery(name = "Livro.findByEditora", query = "SELECT l FROM Livro l WHERE l.editora = :editora")
     , @NamedQuery(name = "Livro.findByLinguaOficial", query = "SELECT l FROM Livro l WHERE l.linguaOficial = :linguaOficial")
-    , @NamedQuery(name = "Livro.findLivroGenero", query = "SELECT l.titulo, l.dataPublicacao, l.editora, l.linguaOficial, g.nome FROM Livro l JOIN Genero g")})
+    , @NamedQuery(name = "Livro.findLivroGenero", query = "SELECT l.titulo, l.dataPublicacao, l.editora, l.linguaOficial, l.generoId, g.nome FROM Livro l INNER JOIN l.generoId g")})
 @SequenceGenerator(name="livro_seq_pk", sequenceName = "livro_seq_pk", allocationSize = 1, initialValue = 1)
 public class Livro implements Serializable {
 
@@ -75,11 +75,7 @@ public class Livro implements Serializable {
     @JoinColumn(name = "GENERO_ID", referencedColumnName = "ID_GENERO")
     @ManyToOne(optional = false)
     private Genero generoId;
-    @JoinColumn(name = "GENERONOME", referencedColumnName = "NOME")
-    private String generoNome;
     
-    private BigDecimal generoId_;
-        
     public Livro() {
     }
 
@@ -95,12 +91,12 @@ public class Livro implements Serializable {
         this.linguaOficial = linguaOficial;
     }
     
-    public Livro(String titulo, Date dataPublicacao, String editora, String linguaOficial, String generoNome) {
+    public Livro(String titulo, Date dataPublicacao, String editora, String linguaOficial, Genero generoId) {
         this.titulo = titulo;
         this.dataPublicacao = dataPublicacao;
         this.editora = editora;
         this.linguaOficial = linguaOficial;
-        this.generoNome = generoNome;
+        this.generoId = generoId;
     }
     
     public BigDecimal getIdLivro() {
@@ -167,22 +163,6 @@ public class Livro implements Serializable {
 
     public void setGeneroId(Genero generoId) {
         this.generoId = generoId;
-    }
-    
-    public BigDecimal getGeneroId_() {
-        return generoId_;
-    }
-
-    public void setGeneroId_(BigDecimal generoId_) {
-        this.generoId_ = generoId_;
-    }
-    
-    public String getGeneroNome() {
-        return generoNome;
-    }
-
-    public void setGeneroNome(String generoNome) {
-        this.generoNome = generoNome;
     }
 
     @Override

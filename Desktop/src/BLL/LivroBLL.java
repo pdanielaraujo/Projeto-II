@@ -7,6 +7,7 @@ package BLL;
 
 import DAL.Genero;
 import DAL.Livro;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -97,12 +98,12 @@ public class LivroBLL {
             //Livro livro = ((Livro)obj);
             Livro livro = new Livro();
             Object[] aux = obj;
-            System.out.println(aux[4]);
+            System.out.println("teste: " + aux[4]);
             livro.setTitulo((String) aux[0]);
             livro.setDataPublicacao((Date) aux[1]);
             livro.setEditora((String) aux[2]);
             livro.setLinguaOficial((String) aux[3]);
-            livro.setGeneroNome((String) aux[4]);
+            livro.setGeneroId((Genero) aux[4]);
             
             livros.add(livro);
         }     
