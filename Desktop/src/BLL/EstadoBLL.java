@@ -5,7 +5,7 @@
  */
 package BLL;
 
-import DAL.ExemplarLivro;
+import DAL.Estado;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -17,67 +17,56 @@ import javax.persistence.Query;
  *
  * @author Pedro
  */
-public class ExemplarLivroBLL {   
+public class EstadoBLL {
     private static final String PERSISTENCE_UNIT_NAME = "DesktopPU";
     private static EntityManagerFactory factory = null;
     private static EntityManager em = null;
     
-    public static void create(ExemplarLivro exemplar){
-        if(factory == null)
-            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-        
-        if (em == null) em = factory.createEntityManager();
-        
-        em.getTransaction().begin();
-        em.persist(exemplar);
-        em.getTransaction().commit();
-    }
-    
-    public static void update(ExemplarLivro exemplar){
+    public static void update(Estado estado){
         if(factory == null)
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         if (em == null) em = factory.createEntityManager();
         
         em.getTransaction().begin();
-        em.merge(exemplar);
+        em.merge(estado);
         em.getTransaction().commit();
     }
         
-    public static ExemplarLivro read(int idExemplar){
-        ExemplarLivro exemplar = null;
+    public static Estado read(int idEstado){
+        Estado estado = null;
         if(factory == null)
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         if (em == null) em = factory.createEntityManager();
         
-        Query q1 = em.createNamedQuery("ExemplarLivro.findByIdExemplar");
-        q1.setParameter("idexemplar", idExemplar);
+        Query q1 = em.createNamedQuery("Estado.findByIdEstado");
+        q1.setParameter("idestado", idEstado);
         Object obj = q1.getSingleResult();
         
         if(obj != null){
-            exemplar = ((ExemplarLivro)obj);
+            estado = ((Estado)obj);
             //em.merge(cli);
         }
         else
             return null;
         
         
-        return exemplar;
+        return estado;
     }
 
-    public static List<ExemplarLivro> readAll(){
-        List<ExemplarLivro> exemplares = new ArrayList<>();
+    public static List<Estado> readAll(){
+        List<Estado> estados = new ArrayList<>();
         
         factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         if (em == null) em = factory.createEntityManager();
         
-        Query q1 = em.createNamedQuery("ExemplarLivro.findAll");
+        Query q1 = em.createNamedQuery("Estado.findAll");
         List<Object> lstObj = q1.getResultList();
         
         for(Object obj : lstObj){
-            ExemplarLivro exemplar = ((ExemplarLivro)obj);
-            exemplares.add(exemplar);
+            Estado estado = ((Estado)obj);
+            estados.add(estado);
         }        
         
-        return exemplares;
+        return estados;
     }
 }

@@ -44,7 +44,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Livro.findByDataPublicacao", query = "SELECT l FROM Livro l WHERE l.dataPublicacao = :dataPublicacao")
     , @NamedQuery(name = "Livro.findByEditora", query = "SELECT l FROM Livro l WHERE l.editora = :editora")
     , @NamedQuery(name = "Livro.findByLinguaOficial", query = "SELECT l FROM Livro l WHERE l.linguaOficial = :linguaOficial")
-    , @NamedQuery(name = "Livro.findLivroGenero", query = "SELECT l.titulo, l.dataPublicacao, l.editora, l.linguaOficial, l.generoId, g.nome FROM Livro l INNER JOIN l.generoId g")})
+    , @NamedQuery(name = "Livro.findLivroGenero", query = "SELECT l.titulo, l.dataPublicacao, l.editora, l.linguaOficial, l.generoId, g.nome FROM Livro l INNER JOIN l.generoId g")
+    , @NamedQuery(name = "Livro.deleteLivroById", query = "DELETE FROM Livro l WHERE l.idLivro= :idLivro")})
 @SequenceGenerator(name="livro_seq_pk", sequenceName = "livro_seq_pk", allocationSize = 1, initialValue = 1)
 public class Livro implements Serializable {
 
@@ -70,7 +71,7 @@ public class Livro implements Serializable {
     private String linguaOficial;
     @ManyToMany(mappedBy = "livroList")
     private List<Autor> autorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "livroId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "livroId", orphanRemoval = true)
     private List<ExemplarLivro> exemplarLivroList;
     @JoinColumn(name = "GENERO_ID", referencedColumnName = "ID_GENERO")
     @ManyToOne(optional = false)
@@ -187,7 +188,7 @@ public class Livro implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.Livro[ idLivro=" + idLivro + " ]";
+        return this.getTitulo();
     }
     
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="ExemplaresLivros.ExemplaresLivrosController">
+   <children>
+      <TableView fx:id="exemplares_table" layoutY="14.0" prefHeight="427.0" prefWidth="554.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="10.0">
+        <columns>
+          <TableColumn fx:id="col_idExemplar" prefWidth="75.0" text="ID Exemplar" />
+          <TableColumn fx:id="col_titulo" prefWidth="141.33333587646484" text="Título" />
+            <TableColumn fx:id="col_numPaginas" prefWidth="71.33338928222656" text="Nº Páginas" />
+            <TableColumn fx:id="col_lingua" prefWidth="86.00006103515625" text="Língua" />
+            <TableColumn fx:id="col_edicao" prefWidth="70.66668701171875" text="Edição" />
+            <TableColumn fx:id="col_estado" prefWidth="105.99996948242188" text="Estado" />
+        </columns>
+      </TableView>
+      <ChoiceBox fx:id="choicebox_estados" layoutX="688.0" layoutY="79.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>

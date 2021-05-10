@@ -163,7 +163,7 @@ public class Bibliotecario implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.Bibliotecario[ idBibliotecario=" + idBibliotecario + " ]";
+        return this.getNome();
     }
     
 }

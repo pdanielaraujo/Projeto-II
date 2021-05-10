@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Requisicoes.RequisicoesController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Requisicoes.RequisicoesController">
    <children>
-      <TableView fx:id="requisicoes_table" layoutX="33.0" layoutY="46.0" prefHeight="450.0" prefWidth="600.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="25.0">
+      <TableView fx:id="requisicoes_table" layoutX="33.0" layoutY="46.0" prefHeight="450.0" prefWidth="781.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="25.0">
         <columns>
-          <TableColumn fx:id="col_titulo" prefWidth="139.99999523162842" text="Título" />
-          <TableColumn fx:id="col_dataPublicacao" prefWidth="114.00001525878906" text="Data Publicação" />
-            <TableColumn fx:id="col_editora" prefWidth="114.6666259765625" text="Editora" />
-            <TableColumn fx:id="col_linguaOficial" prefWidth="120.0" text="Língua Oficial" />
-            <TableColumn fx:id="col_genero" prefWidth="109.33334350585938" text="Género" />
+          <TableColumn fx:id="col_idReq" prefWidth="82.00000286102295" text="ID Requisição" />
+          <TableColumn fx:id="col_dataRequisicao" prefWidth="100.6666488647461" text="Data Requisição" />
+            <TableColumn fx:id="col_tempReq" prefWidth="112.66667175292969" text="Tempo Requisição" />
+            <TableColumn fx:id="col_dataPrevEntrega" prefWidth="135.33331298828125" text="Data Previsão Entrega" />
+            <TableColumn fx:id="col_leitor" prefWidth="64.66668701171875" text="Leitor" />
+            <TableColumn fx:id="col_exemplarLivro" prefWidth="110.66671752929688" text="Exemplar Livro" />
+            <TableColumn fx:id="col_bibliotecario" prefWidth="82.0" text="Bibliotecário" />
+            <TableColumn fx:id="col_entrega" prefWidth="89.33333333333337" text="Entrega" />
         </columns>
       </TableView>
+      <ChoiceBox fx:id="choicebox_estados" layoutX="814.0" layoutY="111.0" prefWidth="150.0" AnchorPane.rightAnchor="50.0" />
    </children>
 </AnchorPane>

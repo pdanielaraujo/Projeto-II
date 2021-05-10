@@ -74,6 +74,15 @@ public class ExemplarLivro implements Serializable {
         this.idExemplar = idExemplar;
         this.numPaginas = numPaginas;
     }
+    
+    public ExemplarLivro(BigDecimal idExemplar, Livro livroId, BigInteger numPaginas, Lingua linguaId, Edicao edicaoId, Estado estadoId) {
+        this.idExemplar = idExemplar;
+        this.livroId = livroId;
+        this.numPaginas = numPaginas;
+        this.linguaId = linguaId;
+        this.edicaoId = edicaoId;
+        this.estadoId = estadoId;
+    }
 
     public BigDecimal getIdExemplar() {
         return idExemplar;
@@ -154,7 +163,7 @@ public class ExemplarLivro implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.ExemplarLivro[ idExemplar=" + idExemplar + " ]";
+        return this.livroId.getTitulo();
     }
     
 }

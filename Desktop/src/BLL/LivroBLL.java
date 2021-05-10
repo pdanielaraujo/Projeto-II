@@ -44,7 +44,6 @@ public class LivroBLL {
         em.getTransaction().begin();
         em.merge(livro);
         em.getTransaction().commit();
-        
     }
         
     public static Livro read(int idLivro){
@@ -109,16 +108,28 @@ public class LivroBLL {
         }     
         
         return livros;
-    }    
+    }
     
     public static void delete(Livro livro){
         if(factory == null)
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         
         if (em == null) em = factory.createEntityManager();
-        
-        em.getTransaction().begin();
-        em.remove(livro);
-        em.getTransaction().commit();
+       
+        try{
+            persistEntity(livro);
+            Livro l1 = em.find(Livro.class, livro.getIdLivro());
+            em.getTransaction().begin();
+            em.remove(l1);
+            em.getTransaction().commit();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public static void persistEntity(Livro livro) {
+        if (livro.getIdLivro()!= null) em.merge(livro);
+        else em.persist(livro);
     }
 }
+

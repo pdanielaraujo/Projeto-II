@@ -118,7 +118,7 @@ public class Edicao implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.Edicao[ idEdicao=" + idEdicao + " ]";
+        return this.getNome();
     }
     
 }

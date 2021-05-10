@@ -6,16 +6,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desktopui.PaginaInicialController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="desktopui.PaginaInicialController">
     <children>
       <VBox prefHeight="500.0" prefWidth="106.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button fx:id="goToLivros" mnemonicParsing="false" onAction="#loadLivrosPane" prefHeight="25.0" prefWidth="211.0" text="Ver Livros" />
             <Button fx:id="goToRequisicoes" mnemonicParsing="false" onAction="#loadRequisicoesPane" prefHeight="25.0" prefWidth="211.0" text="Ver Requisições" />
-              <Button fx:id="button" onAction="#handleButtonAction" text="Click Me!" />
+              <Button fx:id="button" onAction="#loadExemplaresLivrosPane" prefHeight="25.0" prefWidth="123.0" text="Exemplar Livros" />
          </children>
       </VBox>
-      <AnchorPane layoutX="211.0" prefHeight="500.0" prefWidth="694.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="106.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane layoutX="211.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="106.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label layoutX="101.0" layoutY="5.0" text="Sessão iniciada em, " AnchorPane.rightAnchor="78.33333333333331" AnchorPane.topAnchor="5.0">
                <font>

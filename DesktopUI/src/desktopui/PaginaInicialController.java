@@ -65,4 +65,10 @@ public class PaginaInicialController implements Initializable {
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/Requisicoes/Requisicoes.fxml"));
         rootPane.getChildren().setAll(pane);
     }
+    
+    @FXML
+    void loadExemplaresLivrosPane(ActionEvent event) throws IOException{
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/ExemplaresLivros/ExemplaresLivros.fxml"));
+        rootPane.getChildren().setAll(pane);
+    }
 }
