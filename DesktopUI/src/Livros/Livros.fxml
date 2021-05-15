@@ -12,46 +12,56 @@
 
 <AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Livros.LivrosController">
    <children>
-      <TableView fx:id="livros_table" layoutX="33.0" layoutY="46.0" prefHeight="450.0" prefWidth="575.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="25.0">
+      <TableView fx:id="livros_table" layoutX="33.0" layoutY="46.0" prefHeight="450.0" prefWidth="720.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="25.0">
         <columns>
-          <TableColumn fx:id="col_titulo" prefWidth="139.99999523162842" text="Título" />
-          <TableColumn fx:id="col_dataPublicacao" prefWidth="114.00001525878906" text="Data Publicação" />
-            <TableColumn fx:id="col_editora" prefWidth="114.6666259765625" text="Editora" />
-            <TableColumn fx:id="col_linguaOficial" prefWidth="120.0" text="Língua Oficial" />
-            <TableColumn fx:id="col_genero" prefWidth="83.99996948242188" text="Género" />
+          <TableColumn fx:id="col_titulo" prefWidth="153.3333215713501" text="Título" />
+            <TableColumn fx:id="col_autor" prefWidth="124.00004577636719" text="Autor/es" />
+          <TableColumn fx:id="col_dataPublicacao" prefWidth="134.22222900390625" text="Data Publicação" />
+            <TableColumn fx:id="col_editora" prefWidth="96.66668701171875" text="Editora" />
+            <TableColumn fx:id="col_linguaOficial" prefWidth="103.99996948242188" text="Língua Oficial" />
+            <TableColumn fx:id="col_genero" prefWidth="108.44451904296875" text="Género" />
         </columns>
       </TableView>
-      <TextField fx:id="titulo_txt" layoutX="716.0" layoutY="45.0" prefHeight="25.0" prefWidth="535.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0" />
-      <Label layoutX="623.0" layoutY="27.0" text="Título" AnchorPane.rightAnchor="531.6666666666666" AnchorPane.topAnchor="25.0">
+      <TextField fx:id="titulo_txt" layoutX="716.0" layoutY="45.0" prefHeight="25.0" prefWidth="400.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0" />
+      <Label layoutX="623.0" layoutY="27.0" text="Título" AnchorPane.rightAnchor="404.0" AnchorPane.topAnchor="25.0">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="editora_txt" layoutX="550.0" layoutY="80.0" prefHeight="25.0" prefWidth="535.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="125.0" />
-      <Label layoutX="624.0" layoutY="93.0" text="Editora" AnchorPane.rightAnchor="519.3333333333334" AnchorPane.topAnchor="100.0">
+      <TextField fx:id="editora_txt" layoutX="550.0" layoutY="80.0" prefHeight="25.0" prefWidth="400.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="200.0" />
+      <Label layoutX="624.0" layoutY="93.0" text="Editora" AnchorPane.rightAnchor="392.0" AnchorPane.topAnchor="175.0">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="linguaOficial_txt" layoutX="560.0" layoutY="90.0" prefHeight="25.0" prefWidth="535.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="200.0" />
-      <Label layoutX="635.0" layoutY="167.0" text="Língua Oficial" AnchorPane.rightAnchor="468.0" AnchorPane.topAnchor="175.0">
+      <TextField fx:id="linguaOficial_txt" layoutX="560.0" layoutY="90.0" prefHeight="25.0" prefWidth="400.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="275.0" />
+      <Label layoutX="635.0" layoutY="167.0" text="Língua Oficial" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="250.0">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <DatePicker fx:id="dataPublicacao_datePicker" layoutX="635.0" layoutY="287.0" AnchorPane.rightAnchor="410.0" AnchorPane.topAnchor="275.0" />
-      <Label layoutX="645.0" layoutY="177.0" text="Data de Publicação" AnchorPane.rightAnchor="425.0" AnchorPane.topAnchor="250.0">
+      <DatePicker fx:id="dataPublicacao_datePicker" layoutX="635.0" layoutY="287.0" AnchorPane.rightAnchor="275.0" AnchorPane.topAnchor="350.0" />
+      <Label layoutX="645.0" layoutY="177.0" text="Data de Publicação" AnchorPane.rightAnchor="295.0" AnchorPane.topAnchor="325.0">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="655.0" layoutY="187.0" text="Género" AnchorPane.rightAnchor="520.0" AnchorPane.topAnchor="325.0">
+      <Label layoutX="655.0" layoutY="187.0" text="Género" AnchorPane.rightAnchor="389.0" AnchorPane.topAnchor="400.0">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="choicebox_generos" layoutX="628.0" layoutY="357.0" prefWidth="150.0" AnchorPane.rightAnchor="430.0" AnchorPane.topAnchor="350.0" />
-      <Button fx:id="criar_livro_btn" layoutX="934.0" layoutY="326.0" mnemonicParsing="false" onAction="#criarLivro" text="Adicionar Livro" />
-      <Button fx:id="rmv_livro_btn" layoutX="493.0" layoutY="497.0" mnemonicParsing="false" text="Remover Livro" />
+      <ChoiceBox fx:id="choicebox_generos" layoutX="628.0" layoutY="357.0" prefWidth="150.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="425.0" />
+      <Button fx:id="criar_livro_btn" layoutX="1042.0" layoutY="345.0" mnemonicParsing="false" onAction="#criarLivro" text="Adicionar Livro" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Button fx:id="rmv_livro_btn" layoutX="624.0" layoutY="503.0" mnemonicParsing="false" text="Remover Livro" />
+      <Label layoutX="633.0" layoutY="37.0" text="Autor" AnchorPane.rightAnchor="402.0" AnchorPane.topAnchor="100.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="choicebox_autores" layoutX="638.0" layoutY="367.0" prefWidth="150.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="125.0" />
    </children>
 </AnchorPane>

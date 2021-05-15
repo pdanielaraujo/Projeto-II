@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -17,11 +18,7 @@
                         <Insets />
                      </VBox.margin>
                   </TextField>
-                  <TextField fx:id="password_txt" promptText="Password">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </TextField>
+                  <PasswordField fx:id="password_txt" promptText="Password" />
                   <Button fx:id="criar_bibliotecario_btn" mnemonicParsing="false" onAction="#criarBibliotecario" text="Login">
                      <VBox.margin>
                         <Insets />

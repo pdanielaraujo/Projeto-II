@@ -104,7 +104,7 @@ public class Estado implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.Estado[ idEstado=" + idEstado + " ]";
+        return this.getNome();
     }
     
 }

@@ -4,15 +4,17 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Requisicoes.RequisicoesController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Requisicoes.RequisicoesController">
    <children>
-      <TableView fx:id="requisicoes_table" layoutX="33.0" layoutY="46.0" prefHeight="450.0" prefWidth="600.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="25.0">
+      <TableView fx:id="requisicoes_table" layoutX="33.0" layoutY="46.0" prefWidth="857.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="25.0">
         <columns>
-          <TableColumn fx:id="col_titulo" prefWidth="139.99999523162842" text="Título" />
-          <TableColumn fx:id="col_dataPublicacao" prefWidth="114.00001525878906" text="Data Publicação" />
-            <TableColumn fx:id="col_editora" prefWidth="114.6666259765625" text="Editora" />
-            <TableColumn fx:id="col_linguaOficial" prefWidth="120.0" text="Língua Oficial" />
-            <TableColumn fx:id="col_genero" prefWidth="109.33334350585938" text="Género" />
+          <TableColumn fx:id="col_idRequisicao" prefWidth="80.66665935516357" text="ID Requisição" />
+          <TableColumn fx:id="col_leitor" prefWidth="118.66667938232422" text="Leitor" />
+            <TableColumn fx:id="col_exemplarLivro" prefWidth="149.3333282470703" text="Exemplar Livro" />
+            <TableColumn fx:id="col_dataRequisicao" prefWidth="124.66668701171875" text="Data Requisição" />
+            <TableColumn fx:id="col_tempRequisicao" prefWidth="127.33328247070312" text="Tempo Requisição" />
+            <TableColumn fx:id="col_dataPrevEntrega" prefWidth="127.33328247070312" text="Data Prevista Entrega" />
+            <TableColumn fx:id="col_entrega" prefWidth="126.66670735677087" text="Entrega" />
         </columns>
       </TableView>
    </children>

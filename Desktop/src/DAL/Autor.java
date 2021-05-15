@@ -9,9 +9,12 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -51,10 +54,13 @@ public class Autor implements Serializable {
     @Column(name = "DATA_NASCIMENTO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataNascimento;
-    @JoinTable(name = "LIVRO_AUTOR", joinColumns = {
-        @JoinColumn(name = "ID_AUTOR", referencedColumnName = "ID_AUTOR")}, inverseJoinColumns = {
-        @JoinColumn(name = "ID_LIVRO", referencedColumnName = "ID_LIVRO")})
-    @ManyToMany
+    @ManyToMany(
+            fetch = FetchType.LAZY,  
+            cascade = {
+                    CascadeType.PERSIST,        
+                    CascadeType.MERGE
+            },
+            mappedBy = "autorList")
     private List<Livro> livroList;
 
     public Autor() {
@@ -68,6 +74,15 @@ public class Autor implements Serializable {
         this.idAutor = idAutor;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
+    }
+    
+    public Autor(BigDecimal idAutor, String nome) {
+        this.idAutor = idAutor;
+        this.nome = nome;
+    }
+    
+    public Autor(String nome) {
+        this.nome = nome;
     }
 
     public BigDecimal getIdAutor() {
@@ -125,7 +140,7 @@ public class Autor implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.Autor[ idAutor=" + idAutor + " ]";
+        return this.getNome();
     }
     
 }

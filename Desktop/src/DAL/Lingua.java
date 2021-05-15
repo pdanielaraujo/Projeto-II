@@ -104,7 +104,7 @@ public class Lingua implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.Lingua[ idLingua=" + idLingua + " ]";
+        return this.getNome();
     }
     
 }

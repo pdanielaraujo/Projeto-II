@@ -158,7 +158,7 @@ public class Leitor implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.Leitor[ idLeitor=" + idLeitor + " ]";
+        return this.getNome();
     }
     
 }

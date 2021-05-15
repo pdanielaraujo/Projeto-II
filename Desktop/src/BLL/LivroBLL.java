@@ -5,16 +5,22 @@
  */
 package BLL;
 
+import DAL.Autor;
 import DAL.Genero;
 import DAL.Livro;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.SqlResultSetMapping;
 
 /**
  *
@@ -98,7 +104,7 @@ public class LivroBLL {
             //Livro livro = ((Livro)obj);
             Livro livro = new Livro();
             Object[] aux = obj;
-            System.out.println("teste: " + aux[4]);
+            System.out.println("teste: " + aux[0]);
             livro.setTitulo((String) aux[0]);
             livro.setDataPublicacao((Date) aux[1]);
             livro.setEditora((String) aux[2]);
@@ -107,6 +113,38 @@ public class LivroBLL {
             
             livros.add(livro);
         }     
+        
+        return livros;
+    }   
+    
+    public static List<Livro> readAllWithGeneroAutor(){
+        List<Livro> livros = new ArrayList<Livro>();
+        
+        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        if (em == null) em = factory.createEntityManager();
+        
+        Query q1 = em.createNamedQuery("Livro.findLivroGenero");
+        List<Object[]> lstObj = q1.getResultList();
+        
+        Query q2 = em.createNamedQuery("Livro.findLivroGeneroAutor");
+        List<Autor> lstObjAutor = q2.getResultList();
+        
+        for(Object[] obj : lstObj){
+            //Livro livro = ((Livro)obj);
+            Livro livro = new Livro();
+            Autor autor = new Autor();
+            Object[] aux = obj;
+            System.out.println("teste: " + lstObjAutor.toString());
+            livro.setTitulo((String) aux[0]);
+            livro.setDataPublicacao((Date) aux[1]);
+            livro.setEditora((String) aux[2]);
+            livro.setLinguaOficial((String) aux[3]);
+            livro.setGeneroId((Genero) aux[4]);
+            livro.setAutorList(lstObjAutor);
+            
+            livros.add(livro);
+        }     
+        
         
         return livros;
     }    

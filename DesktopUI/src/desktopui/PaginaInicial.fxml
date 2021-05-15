@@ -10,9 +10,9 @@
     <children>
       <VBox prefHeight="500.0" prefWidth="106.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="goToLivros" mnemonicParsing="false" onAction="#loadLivrosPane" prefHeight="25.0" prefWidth="211.0" text="Ver Livros" />
-            <Button fx:id="goToRequisicoes" mnemonicParsing="false" onAction="#loadRequisicoesPane" prefHeight="25.0" prefWidth="211.0" text="Ver Requisições" />
-              <Button fx:id="button" onAction="#handleButtonAction" text="Click Me!" />
+            <Button fx:id="goToLivros" mnemonicParsing="false" onAction="#loadLivrosPane" prefHeight="25.0" prefWidth="211.0" text="Livros" />
+            <Button fx:id="goToRequisicoes" mnemonicParsing="false" onAction="#loadRequisicoesPane" prefHeight="25.0" prefWidth="211.0" text="Requisições" />
+              <Button fx:id="goToExemplares" onAction="#loadExemplaresPane" prefHeight="25.0" prefWidth="117.0" text="Exemplares" />
          </children>
       </VBox>
       <AnchorPane layoutX="211.0" prefHeight="500.0" prefWidth="694.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="106.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

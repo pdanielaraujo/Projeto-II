@@ -89,6 +89,16 @@ public class Requisicao implements Serializable {
         this.dataReq = dataReq;
         this.dataPrevEntrega = dataPrevEntrega;
     }
+    
+    public Requisicao(BigDecimal idRequisicao, Leitor leitorId, ExemplarLivro exemplarId, Date dataReq, BigInteger tempReq, Date dataPrevEntrega, Entrega entregaId) {
+        this.idRequisicao = idRequisicao;
+        this.leitorId = leitorId;
+        this.exemplarId = exemplarId;
+        this.dataReq = dataReq;
+        this.tempReq = tempReq;
+        this.dataPrevEntrega = dataPrevEntrega;
+        this.entregaId = entregaId;
+    }
 
     public BigDecimal getIdRequisicao() {
         return idRequisicao;

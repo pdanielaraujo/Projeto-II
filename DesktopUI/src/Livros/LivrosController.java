@@ -5,24 +5,18 @@
  */
 package Livros;
 
+import BLL.AutorBLL;
 import BLL.GeneroBLL;
 import BLL.LivroBLL;
+import DAL.Autor;
 import DAL.Genero;
 import DAL.Livro;
-import java.math.BigDecimal;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,7 +26,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -50,6 +43,9 @@ public class LivrosController implements Initializable {
 
     @FXML
     private TableColumn<Livro, String> col_titulo;
+    
+    @FXML
+    private TableColumn<Livro, Autor> col_autor;
 
     @FXML
     private TableColumn<Livro, Date> col_dataPublicacao;
@@ -65,6 +61,9 @@ public class LivrosController implements Initializable {
     
     @FXML
     private TextField titulo_txt;
+    
+    //@FXML
+    //private TextField autor_txt;
 
     @FXML
     private TextField editora_txt;
@@ -79,6 +78,9 @@ public class LivrosController implements Initializable {
     private ChoiceBox<Genero> choicebox_generos;
     
     @FXML
+    private ChoiceBox<Autor> choicebox_autores;
+    
+    @FXML
     private Button criar_livro_btn;
 
     @FXML
@@ -89,21 +91,8 @@ public class LivrosController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ObservableList<Livro> lista_livros = FXCollections.observableArrayList();
-        List<Livro> livros = LivroBLL.readAllWithGenero();
         
-        for(Livro livros_ : livros){
-            lista_livros.add(new Livro(livros_.getTitulo(), livros_.getDataPublicacao(), livros_.getEditora(), livros_.getLinguaOficial(), livros_.getGeneroId()));
-            System.out.println("Livro: " + lista_livros.toString());
-        }
-        
-        col_titulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-        col_dataPublicacao.setCellValueFactory(new PropertyValueFactory<>("dataPublicacao"));
-        col_editora.setCellValueFactory(new PropertyValueFactory<>("editora"));
-        col_linguaOficial.setCellValueFactory(new PropertyValueFactory<>("linguaOficial"));
-        col_genero.setCellValueFactory(new PropertyValueFactory<>("generoId"));
-        
-        livros_table.setItems(lista_livros);
+        atualizarTabela();
         
         // Preencher lista de escolhas de género
         ObservableList<Genero> lista_generos = FXCollections.observableArrayList();
@@ -118,7 +107,40 @@ public class LivrosController implements Initializable {
         }
         choicebox_generos.setItems(lista_generos);
         
+        // Preencher lista de escolhas de género
+        ObservableList<Autor> lista_autores = FXCollections.observableArrayList();
+        List<Autor> autores = AutorBLL.readAll();
+        
+        for(Autor autores_ : autores){
+            //String nomeGenero = generos_.getNome();
+            lista_autores.add(new Autor(autores_.getIdAutor(), autores_.getNome()));
+            lista_autores.toString();
+            //System.out.println("id: " + generos_.getIdGenero());
+            //System.out.println("genero: " + generos_.getNome());
+        }
+        choicebox_autores.setItems(lista_autores);
+        
     }    
+    
+    void atualizarTabela(){
+        ObservableList<Livro> lista_livros = FXCollections.observableArrayList();
+        List<Livro> livros = LivroBLL.readAllWithGeneroAutor();
+        
+        for(Livro livros_ : livros){
+            System.out.println("Livro: " + livros_.getAutorList());
+            lista_livros.add(new Livro(livros_.getTitulo(), livros_.getDataPublicacao(), livros_.getEditora(), livros_.getLinguaOficial(), livros_.getGeneroId(), livros_.getAutorList()));
+            
+        }
+        
+        col_titulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        col_dataPublicacao.setCellValueFactory(new PropertyValueFactory<>("dataPublicacao"));
+        col_editora.setCellValueFactory(new PropertyValueFactory<>("editora"));
+        col_linguaOficial.setCellValueFactory(new PropertyValueFactory<>("linguaOficial"));
+        col_genero.setCellValueFactory(new PropertyValueFactory<>("generoId"));
+        col_autor.setCellValueFactory(new PropertyValueFactory<>("autorList"));
+        
+        livros_table.setItems(lista_livros);
+    }
     
     @FXML
     void criarLivro(ActionEvent event){
@@ -143,7 +165,13 @@ public class LivrosController implements Initializable {
         livro.setDataPublicacao(data_publicacao);
         livro.setGeneroId(choicebox_generos.getValue());
         LivroBLL.create(livro);
-        livros_table.refresh();
+        atualizarTabela();
+        titulo_txt.clear();
+        //autor_txt.clear();
+        editora_txt.clear();
+        linguaOficial_txt.clear();
+        dataPublicacao_datePicker.setValue(null);
+        choicebox_generos.setValue(null);
         
         
         

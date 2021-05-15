@@ -30,7 +30,7 @@ public class PaginaInicialController implements Initializable {
     private Button goToRequisicoes;
 
     @FXML
-    private Button button;
+    private Button goToExemplares;
 
     @FXML
     private Label label_teste;
@@ -63,6 +63,12 @@ public class PaginaInicialController implements Initializable {
     @FXML
     void loadRequisicoesPane(ActionEvent event) throws IOException{
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/Requisicoes/Requisicoes.fxml"));
+        rootPane.getChildren().setAll(pane);
+    }
+    
+    @FXML
+    void loadExemplaresPane(ActionEvent event) throws IOException{
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/Exemplares/Exemplares.fxml"));
         rootPane.getChildren().setAll(pane);
     }
 }

@@ -9,15 +9,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import javafx.beans.property.SimpleStringProperty;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -44,7 +47,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Livro.findByDataPublicacao", query = "SELECT l FROM Livro l WHERE l.dataPublicacao = :dataPublicacao")
     , @NamedQuery(name = "Livro.findByEditora", query = "SELECT l FROM Livro l WHERE l.editora = :editora")
     , @NamedQuery(name = "Livro.findByLinguaOficial", query = "SELECT l FROM Livro l WHERE l.linguaOficial = :linguaOficial")
-    , @NamedQuery(name = "Livro.findLivroGenero", query = "SELECT l.titulo, l.dataPublicacao, l.editora, l.linguaOficial, l.generoId, g.nome FROM Livro l INNER JOIN l.generoId g")})
+    , @NamedQuery(name = "Livro.findLivroGenero", query = "SELECT l.titulo, l.dataPublicacao, l.editora, l.linguaOficial, l.generoId, g.nome FROM Livro l INNER JOIN l.generoId g")
+    , @NamedQuery(name = "Livro.findLivroGeneroAutor", query = "SELECT a FROM Livro l INNER JOIN FETCH l.autorList a")})
 @SequenceGenerator(name="livro_seq_pk", sequenceName = "livro_seq_pk", allocationSize = 1, initialValue = 1)
 public class Livro implements Serializable {
 
@@ -68,7 +72,10 @@ public class Livro implements Serializable {
     @Basic(optional = false)
     @Column(name = "LINGUA_OFICIAL")
     private String linguaOficial;
-    @ManyToMany(mappedBy = "livroList")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "LIVRO_AUTOR", joinColumns = {
+        @JoinColumn(name = "ID_LIVRO", referencedColumnName = "ID_LIVRO")}, inverseJoinColumns = {
+        @JoinColumn(name = "ID_AUTOR", referencedColumnName = "ID_AUTOR")})
     private List<Autor> autorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "livroId")
     private List<ExemplarLivro> exemplarLivroList;
@@ -91,14 +98,15 @@ public class Livro implements Serializable {
         this.linguaOficial = linguaOficial;
     }
     
-    public Livro(String titulo, Date dataPublicacao, String editora, String linguaOficial, Genero generoId) {
+    public Livro(String titulo, Date dataPublicacao, String editora, String linguaOficial, Genero generoId, List<Autor> autorId) {
         this.titulo = titulo;
         this.dataPublicacao = dataPublicacao;
         this.editora = editora;
         this.linguaOficial = linguaOficial;
         this.generoId = generoId;
+        this.autorList = autorId;
     }
-    
+        
     public BigDecimal getIdLivro() {
         return idLivro;
     }
@@ -144,8 +152,8 @@ public class Livro implements Serializable {
         return autorList;
     }
 
-    public void setAutorList(List<Autor> autorList) {
-        this.autorList = autorList;
+    public void setAutorList(List<Autor> autorId) {
+            this.autorList = autorId;
     }
 
     @XmlTransient
@@ -187,7 +195,7 @@ public class Livro implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.Livro[ idLivro=" + idLivro + " ]";
+        return this.getTitulo();
     }
     
 }

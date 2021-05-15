@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="Exemplares.ExemplaresController">
+   <children>
+      <TableView fx:id="exemplares_table" layoutX="213.0" layoutY="91.0" prefHeight="479.0" prefWidth="562.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="25.0">
+        <columns>
+          <TableColumn fx:id="col_idExemplar" prefWidth="72.00003337860107" text="ID Exemplar" />
+          <TableColumn fx:id="col_titulo" prefWidth="145.99996185302734" text="Título" />
+            <TableColumn fx:id="col_numPag" prefWidth="67.33332824707031" text="Nº Páginas" />
+            <TableColumn fx:id="col_lingua" prefWidth="87.3333740234375" text="Língua" />
+            <TableColumn fx:id="col_edicao" prefWidth="72.6666259765625" text="Edição" />
+            <TableColumn fx:id="col_estado" prefWidth="114.66665649414062" text="Estado" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
