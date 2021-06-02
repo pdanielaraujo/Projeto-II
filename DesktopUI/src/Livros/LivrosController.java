@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -43,9 +45,6 @@ public class LivrosController implements Initializable {
 
     @FXML
     private TableColumn<Livro, String> col_titulo;
-    
-    @FXML
-    private TableColumn<Livro, Autor> col_autor;
 
     @FXML
     private TableColumn<Livro, Date> col_dataPublicacao;
@@ -61,24 +60,21 @@ public class LivrosController implements Initializable {
     
     @FXML
     private TextField titulo_txt;
-    
-    //@FXML
-    //private TextField autor_txt;
 
     @FXML
     private TextField editora_txt;
 
     @FXML
     private TextField linguaOficial_txt;
+    
+    @FXML
+    private TextField filter_livro_txt;
 
     @FXML
     private DatePicker dataPublicacao_datePicker;
     
     @FXML
     private ChoiceBox<Genero> choicebox_generos;
-    
-    @FXML
-    private ChoiceBox<Autor> choicebox_autores;
     
     @FXML
     private Button criar_livro_btn;
@@ -93,6 +89,7 @@ public class LivrosController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         atualizarTabela();
+        pesquisar();
         
         // Preencher lista de escolhas de género
         ObservableList<Genero> lista_generos = FXCollections.observableArrayList();
@@ -107,7 +104,7 @@ public class LivrosController implements Initializable {
         }
         choicebox_generos.setItems(lista_generos);
         
-        // Preencher lista de escolhas de género
+        /*// Preencher lista de escolhas de género
         ObservableList<Autor> lista_autores = FXCollections.observableArrayList();
         List<Autor> autores = AutorBLL.readAll();
         
@@ -118,18 +115,60 @@ public class LivrosController implements Initializable {
             //System.out.println("id: " + generos_.getIdGenero());
             //System.out.println("genero: " + generos_.getNome());
         }
-        choicebox_autores.setItems(lista_autores);
+        choicebox_autores.setItems(lista_autores);*/
         
     }    
     
-    void atualizarTabela(){
-        ObservableList<Livro> lista_livros = FXCollections.observableArrayList();
-        List<Livro> livros = LivroBLL.readAllWithGeneroAutor();
+    void pesquisar(){
+        ObservableList<Livro> lista_livros_pesquisa = FXCollections.observableArrayList();
+        
+        col_titulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        col_dataPublicacao.setCellValueFactory(new PropertyValueFactory<>("dataPublicacao"));
+        col_editora.setCellValueFactory(new PropertyValueFactory<>("editora"));
+        col_linguaOficial.setCellValueFactory(new PropertyValueFactory<>("linguaOficial"));
+        col_genero.setCellValueFactory(new PropertyValueFactory<>("generoId"));
+        
+        List<Livro> livros = LivroBLL.readAllWithGenero();
         
         for(Livro livros_ : livros){
             System.out.println("Livro: " + livros_.getAutorList());
-            lista_livros.add(new Livro(livros_.getTitulo(), livros_.getDataPublicacao(), livros_.getEditora(), livros_.getLinguaOficial(), livros_.getGeneroId(), livros_.getAutorList()));
-            
+            lista_livros_pesquisa.add(new Livro(livros_.getTitulo(), livros_.getDataPublicacao(), livros_.getEditora(), livros_.getLinguaOficial(), livros_.getGeneroId()));
+        }
+        
+        livros_table.setItems(lista_livros_pesquisa);
+        FilteredList<Livro> filteredData = new FilteredList<>(lista_livros_pesquisa, b -> true);
+        
+        filter_livro_txt.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(livro -> {
+                
+                if(newValue == null || newValue.isEmpty()){
+                    return true;    
+                }
+                
+                String lowerCaseFilter = newValue.toLowerCase();
+                
+                if(livro.getTitulo().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                    return true;
+                } else if(livro.getGeneroId().toString().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                    return true;
+                } else if(livro.getLinguaOficial().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                    return true;
+                }else
+                return false;
+            });
+        });
+        SortedList<Livro> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(livros_table.comparatorProperty());
+        livros_table.setItems(sortedData);
+    }
+    
+    void atualizarTabela(){
+        ObservableList<Livro> lista_livros = FXCollections.observableArrayList();
+        List<Livro> livros = LivroBLL.readAllWithGenero();
+        
+        for(Livro livros_ : livros){
+            System.out.println("Livro: " + livros_.getAutorList());
+            lista_livros.add(new Livro(livros_.getTitulo(), livros_.getDataPublicacao(), livros_.getEditora(), livros_.getLinguaOficial(), livros_.getGeneroId()));
         }
         
         col_titulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
@@ -137,7 +176,6 @@ public class LivrosController implements Initializable {
         col_editora.setCellValueFactory(new PropertyValueFactory<>("editora"));
         col_linguaOficial.setCellValueFactory(new PropertyValueFactory<>("linguaOficial"));
         col_genero.setCellValueFactory(new PropertyValueFactory<>("generoId"));
-        col_autor.setCellValueFactory(new PropertyValueFactory<>("autorList"));
         
         livros_table.setItems(lista_livros);
     }

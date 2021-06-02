@@ -23,6 +23,22 @@
             </props>
         </property>
     </bean>
+    
+    <bean id="urlMappingLogin" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="paginalogin.htm">loginController</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="urlMappingRegistar" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="paginaregistar.htm">registarController</prop>
+            </props>
+        </property>
+    </bean>
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
@@ -35,5 +51,17 @@
     <bean name="indexController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="index" />
+    
+    <!--
+    The login controller.
+    -->
+    <bean name="loginController"
+          class="Controller.LoginController"/>
+    
+    <!--
+    The register controller.
+    -->
+    <bean name="registarController"
+          class="Controller.RegistarController"/>
 
 </beans>

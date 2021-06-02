@@ -98,6 +98,14 @@ public class Livro implements Serializable {
         this.linguaOficial = linguaOficial;
     }
     
+    public Livro(String titulo, Date dataPublicacao, String editora, String linguaOficial, Genero generoId) {
+        this.titulo = titulo;
+        this.dataPublicacao = dataPublicacao;
+        this.editora = editora;
+        this.linguaOficial = linguaOficial;
+        this.generoId = generoId;
+    }
+    
     public Livro(String titulo, Date dataPublicacao, String editora, String linguaOficial, Genero generoId, List<Autor> autorId) {
         this.titulo = titulo;
         this.dataPublicacao = dataPublicacao;
