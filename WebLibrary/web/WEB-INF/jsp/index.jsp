@@ -18,7 +18,7 @@
                 margin-left: 15em;
             }
         </style>
-        <title>Biblioteca</title>
+        <title>Biblioteca - Inicie Sessão ou Registe-se</title>
     </head>
 
     <body>

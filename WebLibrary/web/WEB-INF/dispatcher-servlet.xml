@@ -39,6 +39,14 @@
             </props>
         </property>
     </bean>
+    
+    <bean id="urlMappingPaginaInicial" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="paginainicial.htm">paginaInicialController</prop>
+            </props>
+        </property>
+    </bean>
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
@@ -63,5 +71,11 @@
     -->
     <bean name="registarController"
           class="Controller.RegistarController"/>
+    
+    <!--
+    The página inicial controller.
+    -->
+    <bean name="paginaInicialController"
+          class="Controller.PaginaInicialController"/>
 
 </beans>

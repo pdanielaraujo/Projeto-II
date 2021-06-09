@@ -26,6 +26,13 @@ public class RegistarController extends AbstractController {
         if(request.getParameter("submitGoToRegister") != null){
             return new ModelAndView("Registar");
         }
+        
+        // vem do index, recolhe os dados dos text fields e cria user
+        if(request.getParameter("submitRegister") != null){
+            String username = request.getParameter("username");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+        }
         throw new UnsupportedOperationException("Not yet implemented");
     }
     

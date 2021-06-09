@@ -58,21 +58,20 @@
                 border-style: none;
             }
         </style>
-        <title>JSP Page</title>
+        <title>Biblioteca - Inicie Sessão</title>
     </head>
     <body>
         <div class="container">
             <form id="form">
                 <h1 id="login_title">Login</h1>
-                <label class="label" for="uname"><b>Username</b></label>
-                <input class="input_txt" type="text" placeholder="Enter Username" name="uname" required>
+                <label class="label" for="username"><b>Username</b></label>
+                <input class="input_txt" type="text" placeholder="Enter Username" name="username" required>
 
-                <label class="label" for="psw"><b>Password</b></label>
-                <input class="input_txt" type="password" placeholder="Enter Password" name="psw" required>
+                <label class="label" for="password"><b>Password</b></label>
+                <input class="input_txt" type="password" placeholder="Enter Password" name="password" required>
 
-                <input class="input_btn" type="submit" value="Entrar">
+                <input class="input_btn" type="submit" name="submitLogin" value="Entrar">
             </form>
         </div>
-        
     </body>
 </html>

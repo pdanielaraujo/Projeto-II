@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Leitor.findByIdLeitor", query = "SELECT l FROM Leitor l WHERE l.idLeitor = :idLeitor")
     , @NamedQuery(name = "Leitor.findByNome", query = "SELECT l FROM Leitor l WHERE l.nome = :nome")
     , @NamedQuery(name = "Leitor.findByDataNascimento", query = "SELECT l FROM Leitor l WHERE l.dataNascimento = :dataNascimento")
-    , @NamedQuery(name = "Leitor.findByMorada", query = "SELECT l FROM Leitor l WHERE l.morada = :morada")})
+    , @NamedQuery(name = "Leitor.findByMorada", query = "SELECT l FROM Leitor l WHERE l.morada = :morada")
+    , @NamedQuery(name = "Leitor.findByUtilizador", query = "SELECT l FROM Leitor l INNER JOIN l.utilizadorId u WHERE u.idUtilizador = :idUtilizador")})
 public class Leitor implements Serializable {
 
     private static final long serialVersionUID = 1L;
