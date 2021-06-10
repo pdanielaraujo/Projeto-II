@@ -7,6 +7,7 @@ package DAL;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -38,6 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Utilizador.findByPassword", query = "SELECT u FROM Utilizador u WHERE u.password = :password")})
 @SequenceGenerator(name="utilizador_seq_pk", sequenceName = "utilizador_seq_pk", allocationSize = 1, initialValue = 1)
 public class Utilizador implements Serializable {
+
+    @Column(name = "TIPO_UTILIZADOR")
+    private Integer tipoUtilizador;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -147,6 +151,14 @@ public class Utilizador implements Serializable {
     @Override
     public String toString() {
         return "Model.Utilizador[ idUtilizador=" + idUtilizador + " ]";
+    }
+
+    public Integer getTipoUtilizador() {
+        return tipoUtilizador;
+    }
+
+    public void setTipoUtilizador(Integer tipoUtilizador) {
+        this.tipoUtilizador = tipoUtilizador;
     }
     
 }

@@ -12,6 +12,7 @@ import DAL.Utilizador;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -29,6 +30,11 @@ public class LoginController extends AbstractController {
             HttpServletResponse response) throws Exception {
         
         boolean isLogged = false;
+        
+        if(isLogged){
+            
+            return new ModelAndView("PaginaInicial");
+        }
         
         if(request.getParameter("submitGoToLogin") != null){
             return new ModelAndView("Login");
@@ -66,9 +72,21 @@ public class LoginController extends AbstractController {
                 }
             }*/ 
             if(utilizador.getUsername().equals(user_txt.getUsername()) && utilizador.getPassword().equals(user_txt.getPassword())){
-                System.out.println("Credenciais inseridas corretamente.");
-                isLogged = true;
-                return new ModelAndView("PaginaInicial");
+                
+                // Tipo utilizador 2 é Leitor.
+                if(user_txt.getTipoUtilizador() == 2){
+                    System.out.println("Credenciais inseridas corretamente.");
+                    isLogged = true;
+                    // Sessão controlar Login
+                    //HttpSession session = request.getSession();
+                    //session.setAttribute("userLogin", user_txt);
+                    //System.out.println(session);
+                    return new ModelAndView("PaginaInicial");
+                } else{
+                    System.out.println("Não tem permissões para entrar na Página.");
+                    return new ModelAndView("Login");
+                }
+                
             } else{
                 System.out.println("Credenciais Erradas.");
                 return new ModelAndView("Login");
