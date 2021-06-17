@@ -4,26 +4,27 @@
     Author     : Pedro
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Biblioteca - Página Inicial</title>
         <style>
-        input,
+            input,
         textarea,
         button {
             height: 25px;
             margin: 0;
-            padding: 10px;
             font-family: Raleway, sans-serif;
             font-weight: normal;
             font-size: 12pt;
             outline: none;
             border-radius: 0;
             background: none;
-            border: 1px solid #282B33;
         }
 
         button,
@@ -55,26 +56,12 @@
             width: 60%;
         }
 
-        .settings {
-            display: none;
-            float: right;
-            width: 40%;
-            text-align: right;
-        }
-
-        #view {
-            display: none;
-            width: auto;
-            height: 47px;
-        }
-
         #searchbutton {
             width: 60px;
             height: 47px;
         }
 
         input#search {
-            width: 30%;
             width: calc(100% - 90px);
             padding: 10px;
             border: 1px solid #282B33;
@@ -91,26 +78,11 @@
             font-family: Raleway;
         }
 
-        .product {
-            display: inline-block;
-            width: calc(24% - 13px);
-            margin: 10px 10px 30px 10px;
-            vertical-align: top;
-        }
-
         .product img {
             display: block;
             margin: 0 auto;
-            width: auto;
-            height: 200px;
-            max-width: calc(100% - 20px);
-            background-cover: fit;
             box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.8);
             border-radius: 2px;
-        }
-
-        .product-content {
-            text-align: center;
         }
 
         .product h3 {
@@ -130,46 +102,11 @@
         .product .product-text {
             margin: 7px 0 0 0;
             color: #777;
-        }
-
-        .product .price {
-            font-family: sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .product .genre {
             font-size: 14px;
         }
-
-
-        @media screen and (max-width:1150px) {
-            .product {
-                width: calc(33% - 23px);
-            }
-        }
-
-        @media screen and (max-width:700px) {
-            .product {
-                width: calc(50% - 43px);
-            }
-        }
-
-        @media screen and (max-width:400px) {
-            .product {
-                width: 100%;
-            }
-        }
-
+        
         /* TABLE VIEW */
 
-        @media screen and (min-width:401px) {
-            .settings {
-                display: block;
-            }
-            #view {
-                display: inline;
-            }
             .products-table .product {
                 display: block;
                 width: auto;
@@ -192,77 +129,68 @@
                 display: inline-block;
                 margin-left: 20px;
                 vertical-align: middle;
-                width: calc(100% - 145px);
+            }
+            .product-update{
+                display: inline-block;
+                vertical-align: middle;
             }
             .products-table .product h3 {
                 margin: 0;
             }
-        }
-    </style>
+            .input_btn{
+                border-radius: 5px;
+                margin-top: 20px;
+                width: 20%;
+                height: 30px;
+                background: green;
+                align-self: center;
+                font-size: 18px;
+                font-weight: lighter;
+                font-family: Arial;
+                text-align: center;
+                border-style: none;
+            }
+            .inputReservar{
+                cursor: pointer;
+            }
+        </style>
     </head>
+    <!--width: calc(100% - 145px);-->
     <body>
+        <form method="post" action="paginainicial.htm">
+            <input class="input_btn" type="submit" name="submitver" value="Ver">
+        </form>
+        <h1>
+        Bem Vindo ${cliente.username}!
+        </h1>
         <div class="tools">
         <div class="search-area">
             <input type="text" id="search" placeholder="Search" />
             <button id="searchbutton">Go</button>
         </div>
-        <div class="settings">
-            <button id="view">Switch View</button>
-        </div>
     </div>
+    
     <div class="products products-table">
+        <c:forEach items="${lista}" var="item">
         <div class="product">
             <div class="product-img">
-                <img src="http://placehold.it/400x650">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/62/1edicao_Mensagem_1934.jpg">
             </div>
             <div class="product-content">
-                <h3>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit
-                    <small>Consectetur Adipisicing</small>
-                </h3>
-                <p class="product-text price">$9.99</p>
-                <p class="product-text genre">DVD Rental</p>
+                <h3>${item.livroId}</h3>
+                <p class="product-text">Páginas: ${item.numPaginas}</p>
+                <p class="product-text">Idioma: ${item.linguaId}</p>
+                <p class="product-text">Edição: ${item.edicaoId}</p>
+                <p class="product-text">Disponibilidade: ${item.estadoId}</p>
+            </div>
+            <div class="product-update">
+                <form method="get" action="paginainicial.htm">
+                    <input class="product-text" type="hidden" name="idExemplar" value="${item.idExemplar}">
+                    <input class="inputReservar" type="submit" name="submitReservar" value="Reservar">
+                </form>
             </div>
         </div>
-        <div class="product">
-            <div class="product-img">
-                <img src="http://placehold.it/400x650">
-            </div>
-            <div class="product-content">
-                <h3>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti maxime doloribus sint, repudiandae.
-                    <small>Consectetur Adipisicing</small>
-                </h3>
-                <p class="product-text price">$9.99</p>
-                <p class="product-text genre">DVD Rental</p>
-            </div>
-        </div>
-        <div class="product">
-            <div class="product-img">
-                <img src="http://placehold.it/400x650">
-            </div>
-            <div class="product-content">
-                <h3>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    <small>Consectetur Adipisicing</small>
-                </h3>
-                <p class="product-text price">$9.99</p>
-                <p class="product-text genre">DVD Rental</p>
-            </div>
-        </div>
-        <div class="product">
-            <div class="product-img">
-                <img src="http://placehold.it/400x650">
-            </div>
-            <div class="product-content">
-                <h3>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit
-                    <small>Consectetur Adipisicing</small>
-                </h3>
-                <p class="product-text price">$9.99</p>
-                <p class="product-text genre">DVD Rental</p>
-            </div>
-        </div>
-    </div>
+        </c:forEach>
+    </div>  
     </body>
 </html>

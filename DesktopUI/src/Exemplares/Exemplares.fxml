@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="Exemplares.ExemplaresController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Exemplares.ExemplaresController">
    <children>
       <TableView fx:id="exemplares_table" layoutX="213.0" layoutY="91.0" prefHeight="479.0" prefWidth="562.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="25.0">
         <columns>
@@ -17,5 +21,42 @@
             <TableColumn fx:id="col_estado" prefWidth="114.66665649414062" text="Estado" />
         </columns>
       </TableView>
+      <AnchorPane layoutX="583.0" layoutY="25.0" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="upd_exemplar_btn" layoutX="87.0" layoutY="87.0" mnemonicParsing="false" onAction="#atualizarEstado" text="Atualizar Estado" AnchorPane.leftAnchor="87.0" />
+            <ChoiceBox fx:id="choicebox_estados" layoutX="38.0" layoutY="48.0" prefWidth="150.0" AnchorPane.leftAnchor="38.0" />
+         </children>
+      </AnchorPane>
+      <ChoiceBox fx:id="choicebox_livros" layoutX="988.0" layoutY="300.0" prefWidth="150.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="105.0" />
+      <TextField fx:id="paginas_txt" layoutX="951.0" layoutY="182.0" prefHeight="25.0" prefWidth="100.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="180.0" />
+      <Label layoutX="950.0" layoutY="77.0" text="Título" AnchorPane.rightAnchor="204.66666666666663" AnchorPane.topAnchor="80.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="950.0" layoutY="225.0" text="Língua" AnchorPane.rightAnchor="196.0" AnchorPane.topAnchor="230.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="951.0" layoutY="152.0" text="Páginas" AnchorPane.rightAnchor="187.66666666666663" AnchorPane.topAnchor="155.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="choicebox_edicoes" layoutX="998.0" layoutY="310.0" prefWidth="150.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="330.0" />
+      <ChoiceBox fx:id="choicebox_estados_criar" layoutX="1000.0" layoutY="354.0" prefWidth="150.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="405.0" />
+      <Label layoutX="950.0" layoutY="302.0" text="Edição" AnchorPane.rightAnchor="196.0" AnchorPane.topAnchor="305.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="960.0" layoutY="312.0" text="Estado" AnchorPane.rightAnchor="196.0" AnchorPane.topAnchor="380.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="criar_exemplar_btn" layoutX="966.0" layoutY="464.0" mnemonicParsing="false" onAction="#criarExemplar" text="Adicionar Exemplar" AnchorPane.rightAnchor="116.0" />
+      <ChoiceBox fx:id="choicebox_linguas" layoutX="1008.0" layoutY="320.0" prefWidth="150.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="255.0" />
    </children>
 </AnchorPane>

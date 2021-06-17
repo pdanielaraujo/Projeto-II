@@ -62,7 +62,7 @@
     </head>
     <body>
         <div class="container">
-            <form id="form">
+            <form id="form" method="post" action="paginalogin.htm">
                 <h1 id="login_title">Login</h1>
                 <label class="label" for="username"><b>Username</b></label>
                 <input class="input_txt" type="text" placeholder="Enter Username" name="username" required>

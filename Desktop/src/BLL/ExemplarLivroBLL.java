@@ -5,7 +5,9 @@
  */
 package BLL;
 
+import DAL.Estado;
 import DAL.ExemplarLivro;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -37,5 +39,66 @@ public class ExemplarLivroBLL {
         }        
         
         return exemplares;
+    }
+    
+    public static void create(ExemplarLivro exemplar){
+        if(factory == null)
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        
+        if (em == null) em = factory.createEntityManager();
+        
+        em.getTransaction().begin();
+        em.persist(exemplar);
+        em.getTransaction().commit();
+    }
+    
+    public static void update(ExemplarLivro exemplar){
+        if(factory == null)
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        if (em == null) em = factory.createEntityManager();
+        
+        em.getTransaction().begin();
+        em.merge(exemplar);
+        em.getTransaction().commit();
+    }
+    
+    public static ExemplarLivro read(BigDecimal idExemplar){
+        ExemplarLivro exemplar = null;
+        if(factory == null)
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        if (em == null) em = factory.createEntityManager();
+        
+        Query q1 = em.createNamedQuery("ExemplarLivro.findByIdExemplar");
+        q1.setParameter("idExemplar", idExemplar);
+        Object obj = q1.getSingleResult();
+        
+        if(obj != null){
+            exemplar = ((ExemplarLivro)obj);
+            //em.merge(cli);
+        }
+        else
+            return null;
+        
+        
+        return exemplar;
+    }
+    
+    public static void updateEstado(BigDecimal idExemplar, Estado estadoId){
+        
+        ExemplarLivro exemplar = null;
+        if(factory == null)
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        if (em == null) em = factory.createEntityManager();
+        
+        Query q1 = em.createNamedQuery("ExemplarLivro.updateEstado");
+        q1.setParameter("idExemplar", idExemplar);
+        q1.setParameter("estadoId", estadoId);
+        em.getTransaction().begin();
+        q1.executeUpdate();
+        //em.merge(q1);
+        em.getTransaction().commit();
+        
+        
+        //return exemplar;
     }
 }

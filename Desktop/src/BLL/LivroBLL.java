@@ -44,7 +44,6 @@ public class LivroBLL {
         em.getTransaction().begin();
         em.merge(livro);
         em.getTransaction().commit();
-        
     }
         
     public static Livro read(int idLivro){

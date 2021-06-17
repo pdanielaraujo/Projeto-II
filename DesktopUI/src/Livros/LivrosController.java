@@ -90,19 +90,7 @@ public class LivrosController implements Initializable {
         
         atualizarTabela();
         pesquisar();
-        
-        // Preencher lista de escolhas de género
-        ObservableList<Genero> lista_generos = FXCollections.observableArrayList();
-        List<Genero> generos = GeneroBLL.readAll();
-        
-        for(Genero generos_ : generos){
-            //String nomeGenero = generos_.getNome();
-            lista_generos.add(new Genero(generos_.getIdGenero(), generos_.getNome()));
-            lista_generos.toString();
-            //System.out.println("id: " + generos_.getIdGenero());
-            //System.out.println("genero: " + generos_.getNome());
-        }
-        choicebox_generos.setItems(lista_generos);
+        preencherCheckBoxGenero();
         
         /*// Preencher lista de escolhas de género
         ObservableList<Autor> lista_autores = FXCollections.observableArrayList();
@@ -118,6 +106,21 @@ public class LivrosController implements Initializable {
         choicebox_autores.setItems(lista_autores);*/
         
     }    
+    
+    void preencherCheckBoxGenero(){
+        // Preencher lista de escolhas de género
+        ObservableList<Genero> lista_generos = FXCollections.observableArrayList();
+        List<Genero> generos = GeneroBLL.readAll();
+        
+        for(Genero generos_ : generos){
+            //String nomeGenero = generos_.getNome();
+            lista_generos.add(new Genero(generos_.getIdGenero(), generos_.getNome()));
+            lista_generos.toString();
+            //System.out.println("id: " + generos_.getIdGenero());
+            //System.out.println("genero: " + generos_.getNome());
+        }
+        choicebox_generos.setItems(lista_generos);
+    }
     
     void pesquisar(){
         ObservableList<Livro> lista_livros_pesquisa = FXCollections.observableArrayList();
@@ -201,6 +204,7 @@ public class LivrosController implements Initializable {
         livro.setEditora(editora_txt.getText());
         livro.setLinguaOficial(linguaOficial_txt.getText());
         livro.setDataPublicacao(data_publicacao);
+        System.out.println("aaaaaabbbbbbb" + choicebox_generos.getValue());
         livro.setGeneroId(choicebox_generos.getValue());
         LivroBLL.create(livro);
         atualizarTabela();

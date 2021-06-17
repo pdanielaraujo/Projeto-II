@@ -56,6 +56,11 @@ public class Edicao implements Serializable {
     public Edicao(BigDecimal idEdicao) {
         this.idEdicao = idEdicao;
     }
+    
+    public Edicao(BigDecimal idEdicao, String nome) {
+        this.idEdicao = idEdicao;
+        this.nome = nome;
+    }
 
     public Edicao(BigDecimal idEdicao, String nome, BigInteger qtd) {
         this.idEdicao = idEdicao;

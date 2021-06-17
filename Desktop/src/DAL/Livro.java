@@ -89,6 +89,11 @@ public class Livro implements Serializable {
     public Livro(BigDecimal idLivro) {
         this.idLivro = idLivro;
     }
+    
+    public Livro(BigDecimal idLivro, String titulo) {
+        this.idLivro = idLivro;
+        this.titulo = titulo;
+    }
 
     public Livro(BigDecimal idLivro, String titulo, Date dataPublicacao, String editora, String linguaOficial) {
         this.idLivro = idLivro;

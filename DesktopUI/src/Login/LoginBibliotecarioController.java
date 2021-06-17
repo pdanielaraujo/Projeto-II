@@ -162,5 +162,4 @@ public class LoginBibliotecarioController implements Initializable {
         //bibliotecario.setMorada();
         //bibliotecario.setDataNascimento();
     }
-    
 }

@@ -21,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -35,7 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "ExemplarLivro.findAll", query = "SELECT e FROM ExemplarLivro e")
     , @NamedQuery(name = "ExemplarLivro.findByIdExemplar", query = "SELECT e FROM ExemplarLivro e WHERE e.idExemplar = :idExemplar")
-    , @NamedQuery(name = "ExemplarLivro.findByNumPaginas", query = "SELECT e FROM ExemplarLivro e WHERE e.numPaginas = :numPaginas")})
+    , @NamedQuery(name = "ExemplarLivro.findByNumPaginas", query = "SELECT e FROM ExemplarLivro e WHERE e.numPaginas = :numPaginas")
+    , @NamedQuery(name = "ExemplarLivro.updateEstado", query = "UPDATE ExemplarLivro e SET e.estadoId = :estadoId WHERE e.idExemplar = :idExemplar")})
+@SequenceGenerator(name="exemplarLivro_seq_pk", sequenceName = "exemplarLivro_seq_pk", allocationSize = 1, initialValue = 1)
 public class ExemplarLivro implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,11 +46,11 @@ public class ExemplarLivro implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "ID_EXEMPLAR")
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_pk")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="exemplarLivro_seq_pk")
     private BigDecimal idExemplar;
     @Basic(optional = false)
     @Column(name = "NUM_PAGINAS")
-    private BigInteger numPaginas;
+    private Integer numPaginas;
     @JoinColumn(name = "EDICAO_ID", referencedColumnName = "ID_EDICAO")
     @ManyToOne(optional = false)
     private Edicao edicaoId;
@@ -70,12 +73,21 @@ public class ExemplarLivro implements Serializable {
         this.idExemplar = idExemplar;
     }
 
-    public ExemplarLivro(BigDecimal idExemplar, BigInteger numPaginas) {
+    public ExemplarLivro(BigDecimal idExemplar, Integer numPaginas) {
         this.idExemplar = idExemplar;
         this.numPaginas = numPaginas;
     }
     
-    public ExemplarLivro(BigDecimal idExemplar, Livro livroId, BigInteger numPaginas, Lingua linguaId, Edicao edicaoId, Estado estadoId) {
+    public ExemplarLivro(BigDecimal idExemplar, Livro livroId, Integer numPaginas, Lingua linguaId, Edicao edicaoId, Estado estadoId) {
+        this.idExemplar = idExemplar;
+        this.livroId = livroId;
+        this.numPaginas = numPaginas;
+        this.linguaId = linguaId;
+        this.edicaoId = edicaoId;
+        this.estadoId = estadoId;
+    }
+    
+    public ExemplarLivro(Livro livroId, Integer numPaginas, Lingua linguaId, Edicao edicaoId, Estado estadoId) {
         this.idExemplar = idExemplar;
         this.livroId = livroId;
         this.numPaginas = numPaginas;
@@ -92,11 +104,11 @@ public class ExemplarLivro implements Serializable {
         this.idExemplar = idExemplar;
     }
 
-    public BigInteger getNumPaginas() {
+    public Integer getNumPaginas() {
         return numPaginas;
     }
 
-    public void setNumPaginas(BigInteger numPaginas) {
+    public void setNumPaginas(Integer numPaginas) {
         this.numPaginas = numPaginas;
     }
 

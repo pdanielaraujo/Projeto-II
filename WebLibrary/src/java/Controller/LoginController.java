@@ -5,14 +5,11 @@
  */
 package Controller;
 
-import BLL.LeitorBLL;
 import BLL.UtilizadorBLL;
-import DAL.Leitor;
 import DAL.Utilizador;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -81,7 +78,10 @@ public class LoginController extends AbstractController {
                     //HttpSession session = request.getSession();
                     //session.setAttribute("userLogin", user_txt);
                     //System.out.println(session);
-                    return new ModelAndView("PaginaInicial");
+                    //return new ModelAndView("PaginaInicial", "cliente", user_txt);
+                    ModelAndView finalModelo = new ModelAndView("PaginaInicial");
+                    finalModelo.addObject("cliente", user_txt);
+                    return finalModelo;
                 } else{
                     System.out.println("Não tem permissões para entrar na Página.");
                     return new ModelAndView("Login");

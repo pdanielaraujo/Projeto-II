@@ -22,6 +22,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,6 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Requisicao.findByTempReq", query = "SELECT r FROM Requisicao r WHERE r.tempReq = :tempReq")
     , @NamedQuery(name = "Requisicao.findByDataReq", query = "SELECT r FROM Requisicao r WHERE r.dataReq = :dataReq")
     , @NamedQuery(name = "Requisicao.findByDataPrevEntrega", query = "SELECT r FROM Requisicao r WHERE r.dataPrevEntrega = :dataPrevEntrega")})
+@SequenceGenerator(name="requisicao_seq_pk", sequenceName = "requisicao_seq_pk", allocationSize = 1, initialValue = 1)
 public class Requisicao implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,7 +50,7 @@ public class Requisicao implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "ID_REQUISICAO")
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_pk")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="requisicao_seq_pk")
     private BigDecimal idRequisicao;
     @Basic(optional = false)
     @Column(name = "TEMP_REQ")
