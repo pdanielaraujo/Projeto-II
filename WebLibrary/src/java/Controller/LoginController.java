@@ -9,6 +9,7 @@ import BLL.UtilizadorBLL;
 import DAL.Utilizador;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
@@ -44,30 +45,7 @@ public class LoginController extends AbstractController {
             utilizador.setUsername(username);
             utilizador.setPassword(password);
             Utilizador user_txt = UtilizadorBLL.readUsername(utilizador.getUsername());
-            //List<Utilizador> utilizadores = UtilizadorBLL.readAll();
             
-            /*for(Utilizador u: utilizadores){
-                if(!username.equals(u.getUsername())){
-                    System.out.println(username);
-                    System.out.println(u.getUsername());
-                    if(password.equals(u.getPassword())){
-                        System.out.println("bbb");
-                        List<Leitor> leitores = LeitorBLL.readAll();
-                        for(Leitor l: leitores){
-                            if(!l.getUtilizadorId().equals(u)){
-                                System.out.println("aaa");
-                                return new ModelAndView("PaginaInicial");
-                            }
-                        }
-                    } else{
-                        System.out.println("Esta password não existe.");
-                        return new ModelAndView("Login");
-                    }
-                } else{
-                    System.out.println("Este username não existe.");
-                    return new ModelAndView("Login");
-                }
-            }*/ 
             if(utilizador.getUsername().equals(user_txt.getUsername()) && utilizador.getPassword().equals(user_txt.getPassword())){
                 
                 // Tipo utilizador 2 é Leitor.
@@ -75,12 +53,16 @@ public class LoginController extends AbstractController {
                     System.out.println("Credenciais inseridas corretamente.");
                     isLogged = true;
                     // Sessão controlar Login
-                    //HttpSession session = request.getSession();
-                    //session.setAttribute("userLogin", user_txt);
-                    //System.out.println(session);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("userLogin", isLogged);
+                    System.out.println(session.toString());
                     //return new ModelAndView("PaginaInicial", "cliente", user_txt);
+                    //response.sendRedirect("paginainicial.htm");
                     ModelAndView finalModelo = new ModelAndView("PaginaInicial");
                     finalModelo.addObject("cliente", user_txt);
+                    finalModelo.addObject("loginStatus", isLogged);
+                    request.setAttribute("loginStatus", isLogged);
+                    response.sendRedirect(request.getContextPath()+"/paginainicial.htm");
                     return finalModelo;
                 } else{
                     System.out.println("Não tem permissões para entrar na Página.");
@@ -94,7 +76,7 @@ public class LoginController extends AbstractController {
         }
         
         //throw new UnsupportedOperationException("Not yet implemented");
-        return new ModelAndView("index");
+        return new ModelAndView("PaginaInicial");
     }
     
 }

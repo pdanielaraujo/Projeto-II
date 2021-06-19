@@ -7,22 +7,17 @@ package Controller;
 
 import BLL.EstadoBLL;
 import BLL.ExemplarLivroBLL;
-import BLL.GeneroBLL;
-import BLL.LivroBLL;
-import BLL.UtilizadorBLL;
 import DAL.Estado;
 import DAL.ExemplarLivro;
-import DAL.Genero;
-import DAL.Livro;
-import DAL.Utilizador;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -30,29 +25,51 @@ import org.springframework.web.servlet.mvc.AbstractController;
  *
  * @author Pedro
  */
+@Controller
+@RequestMapping(value = "/paginainicial.htm")
 public class PaginaInicialController extends AbstractController {
     
     public PaginaInicialController() {
     }
+    ModelAndView finalModelo = new ModelAndView("PaginaInicial");
     
     protected ModelAndView handleRequestInternal(
             HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         
-        if(request.getParameter("submitver") != null){
-            ArrayList<ExemplarLivro> lista_exemplares = new ArrayList<>();
-            List<ExemplarLivro> exemplares = ExemplarLivroBLL.readAll();
-        
-            for(ExemplarLivro exemplares_ : exemplares){
-                //System.out.println("Livro: " + exemplares_.getAutorList());
-                lista_exemplares.add(new ExemplarLivro(exemplares_.getIdExemplar(), exemplares_.getLivroId(), exemplares_.getNumPaginas(), exemplares_.getLinguaId(), exemplares_.getEdicaoId(), exemplares_.getEstadoId()));
-                lista_exemplares.toString();
-            }
+        //boolean isLogged = Boolean.parseBoolean(request.getParameter("loginStatus"));
+        try{
+            HttpSession session = request.getSession();
+            boolean isLogged = (boolean) session.getAttribute("userLogin");
             
-            ModelAndView finalModelo = new ModelAndView("PaginaInicial");
-            finalModelo.addObject("lista", lista_exemplares);
-            return finalModelo;
-        }
+            System.out.println(isLogged);
+            if(isLogged){
+                ArrayList<ExemplarLivro> lista_exemplares = new ArrayList<>();
+                List<ExemplarLivro> exemplares = ExemplarLivroBLL.readAll();
+        
+                for(ExemplarLivro exemplares_ : exemplares){
+                    //System.out.println("Livro: " + exemplares_.getAutorList());
+                    lista_exemplares.add(new ExemplarLivro(exemplares_.getIdExemplar(), exemplares_.getLivroId(), exemplares_.getNumPaginas(), exemplares_.getLinguaId(), exemplares_.getEdicaoId(), exemplares_.getEstadoId()));
+                    lista_exemplares.toString();
+                }
+            
+                finalModelo.addObject("lista", lista_exemplares);
+                return finalModelo;
+            } else {
+                ModelAndView modelIndex = new ModelAndView("index");
+                response.sendRedirect(request.getContextPath()+"/index.htm");
+                return modelIndex;
+            }
+        }catch(NullPointerException npe){
+            ModelAndView modelIndex = new ModelAndView("index");
+            response.sendRedirect(request.getContextPath()+"/index.htm");
+            return modelIndex;
+        }   
+    }
+    
+    protected ModelAndView handleRequestInternalReservar(
+            HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
         
         if(request.getParameter("submitReservar") != null){
             
@@ -107,15 +124,10 @@ public class PaginaInicialController extends AbstractController {
                 lista_exemplares.toString();
             }
             
-            ModelAndView finalModelo = new ModelAndView("PaginaInicial");
             finalModelo.addObject("lista", lista_exemplares);
             return finalModelo;
         }
         
-        
-        
-        
-        return new ModelAndView("index");
+        return new ModelAndView("PaginaInicial");
     }
-    
 }
