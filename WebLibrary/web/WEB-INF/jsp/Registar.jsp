@@ -11,8 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <style>
             .container{
-                margin-left: 10em;
-                margin-top: 10em;
+                margin-left: 10%;
+                margin-top: 5%;
                 width: 35%;
                 background: cornflowerblue;
                 border-radius: 20px;
@@ -62,7 +62,7 @@
     </head>
     <body>
         <div class="container">
-            <form id="form">
+            <form id="form" method="post" action="paginaregistar.htm">
                 <h1 id="login_title">Registo</h1>
                 <label class="label" for="username"><b>Username</b></label>
                 <input class="input_txt" type="text" placeholder="Enter Username" name="username" required>
@@ -72,6 +72,15 @@
 
                 <label class="label" for="password"><b>Password</b></label>
                 <input class="input_txt" type="password" placeholder="Enter Password" name="password" required>
+                
+                <label class="label" for="nome"><b>Nome</b></label>
+                <input class="input_txt" type="text" placeholder="Enter your name" name="nome" required>
+                
+                <label class="label" for="morada"><b>Morada</b></label>
+                <input class="input_txt" type="text" placeholder="Enter your address" name="morada" required>
+                
+                <label class="label" for="dataNascimento"><b>Data Nascimento</b></label>
+                <input class="input_txt" type="date" placeholder="Birth date" name="dataNascimento" required>
 
                 <input class="input_btn" type="submit" name="submitRegister" value="Criar Conta">
             </form>

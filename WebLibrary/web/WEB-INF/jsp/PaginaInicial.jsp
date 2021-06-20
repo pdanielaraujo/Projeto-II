@@ -19,12 +19,16 @@
         button {
             height: 25px;
             margin: 0;
-            font-family: Raleway, sans-serif;
             font-weight: normal;
             font-size: 12pt;
             outline: none;
             border-radius: 0;
             background: none;
+        }
+        
+        body{
+            margin: 0;
+            font-family: Arial;
         }
 
         button,
@@ -49,11 +53,14 @@
         .tools {
             overflow: auto;
             zoom: 1;
+            display: contents;
         }
 
         .search-area {
             float: left;
             width: 60%;
+            margin-left: 10%;
+            margin-right: 10%;
         }
 
         #searchbutton {
@@ -75,7 +82,8 @@
 
         .products {
             width: 100%;
-            font-family: Raleway;
+            margin-top: 5%;
+            margin-left: 2%;
         }
 
         .product img {
@@ -129,6 +137,7 @@
                 display: inline-block;
                 margin-left: 20px;
                 vertical-align: middle;
+                width: 20%;
             }
             .product-update{
                 display: inline-block;
@@ -137,37 +146,47 @@
             .products-table .product h3 {
                 margin: 0;
             }
-            .input_btn{
+            .inputReservar{
+                cursor: pointer;
                 border-radius: 5px;
-                margin-top: 20px;
-                width: 20%;
+                width: 6em;
                 height: 30px;
-                background: green;
-                align-self: center;
                 font-size: 18px;
                 font-weight: lighter;
                 font-family: Arial;
                 text-align: center;
                 border-style: none;
+                background: gainsboro;
             }
-            .inputReservar{
-                cursor: pointer;
+            .header{
+                display: flex;
+                flex-flow: row-reverse;
+                width: 100%;
+            }
+            .loggedTitle{
+                margin-left: auto;
+                margin-right: 1%;
+            }
+            .siteTitle{
+                margin-left: 1%;
+                margin-right: auto;
             }
         </style>
     </head>
     <!--width: calc(100% - 145px);-->
     <body>
-        <form method="post" action="paginainicial.htm">
+        <!--<form method="post" action="paginainicial.htm">
             <input class="input_btn" type="submit" name="submitver" value="Ver">
-        </form>
-        <h1>
-        Bem Vindo ${cliente.username}!
-        </h1>
+        </form>-->
+    <div class="header">
+        <h3 class="loggedTitle"> Bem Vindo ${leitor.username}!</h3>
         <div class="tools">
-        <div class="search-area">
+            <div class="search-area">
             <input type="text" id="search" placeholder="Search" />
             <button id="searchbutton">Go</button>
+            </div>
         </div>
+        <h1 class="siteTitle">Biblioteca</h1>
     </div>
     
     <div class="products products-table">

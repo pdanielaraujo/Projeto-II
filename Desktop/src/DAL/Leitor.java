@@ -13,12 +13,15 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,6 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Leitor.findByDataNascimento", query = "SELECT l FROM Leitor l WHERE l.dataNascimento = :dataNascimento")
     , @NamedQuery(name = "Leitor.findByMorada", query = "SELECT l FROM Leitor l WHERE l.morada = :morada")
     , @NamedQuery(name = "Leitor.findByUtilizador", query = "SELECT l FROM Leitor l INNER JOIN l.utilizadorId u WHERE u.idUtilizador = :idUtilizador")})
+@SequenceGenerator(name="leitor_seq_pk", sequenceName = "leitor_seq_pk", allocationSize = 1, initialValue = 1)
 public class Leitor implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,6 +50,7 @@ public class Leitor implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "ID_LEITOR")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="leitor_seq_pk")
     private BigDecimal idLeitor;
     @Basic(optional = false)
     @Column(name = "NOME")

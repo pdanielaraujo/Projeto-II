@@ -116,23 +116,32 @@ public class LoginBibliotecarioController implements Initializable {
         try{
             if(utilizador.getUsername().equals(username.getUsername()) && utilizador.getPassword().equals(username.getPassword())){
                 System.out.println("Credenciais inseridas corretamente.");
-                isLogged = true;
-                //enviarDados();
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/desktopui/PaginaInicial.fxml"));
-                    Parent root = loader.load();
+                if(username.getTipoUtilizador() == 1){
+                    isLogged = true;
+                    //enviarDados();
+                    System.out.println("Credenciais inseridas corretamente.");
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/desktopui/PaginaInicial.fxml"));
+                        Parent root = loader.load();
    
-                    //The following both lines are the only addition we need to pass the arguments
-                    PaginaInicialController pgIniController = loader.getController();
-                    pgIniController.receberUsername(utilizador.getUsername());
+                        //The following both lines are the only addition we need to pass the arguments
+                        PaginaInicialController pgIniController = loader.getController();
+                        pgIniController.receberUsername(utilizador.getUsername());
                     
-                    //stage.setScene(new Scene(root));
-                    stage.getScene().setRoot(root);
-                    //stage.setTitle("Layout2 + Controller2");
-                    stage.show();
+                        //stage.setScene(new Scene(root));
+                        stage.getScene().setRoot(root);
+                        //stage.setTitle("Layout2 + Controller2");
+                        stage.show();
    
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else{
+                    System.out.println("Não tem permissões para entrar na Página.");
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Sem Permissões");
+                    alert.setHeaderText("Não tem permissões para entrar aqui.");
+                    alert.show(); 
                 }
             } else{
                 System.out.println("O username inserido não existe.");

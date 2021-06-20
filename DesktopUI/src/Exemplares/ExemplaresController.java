@@ -96,7 +96,7 @@ public class ExemplaresController implements Initializable {
         preencherCheckBoxLingua();
         preencherCheckBoxEdicao();
     }    
-    
+    @FXML
     void atualizarTabela(){
         ObservableList<ExemplarLivro> lista_exemplares = FXCollections.observableArrayList();
         List<ExemplarLivro> exemplares = ExemplarLivroBLL.readAll();
@@ -177,21 +177,6 @@ public class ExemplaresController implements Initializable {
         }
         choicebox_edicoes.setItems(lista_edicoes);
     }
-    
-    /*void preencherCheckBoxGenero(){
-        // Preencher lista de escolhas de género
-        ObservableList<Genero> lista_generos = FXCollections.observableArrayList();
-        List<Genero> generos = GeneroBLL.readAll();
-        
-        for(Genero generos_ : generos){
-            //String nomeGenero = generos_.getNome();
-            lista_generos.add(new Genero(generos_.getIdGenero(), generos_.getNome()));
-            lista_generos.toString();
-            //System.out.println("id: " + generos_.getIdGenero());
-            //System.out.println("genero: " + generos_.getNome());
-        }
-        choicebox_generos.setItems(lista_generos);
-    }*/
     
     @FXML
     void atualizarEstado(ActionEvent event){

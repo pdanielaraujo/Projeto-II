@@ -24,6 +24,17 @@ public class LeitorBLL {
     private static EntityManagerFactory factory = null;
     private static EntityManager em = null;
     
+    public static void create(Leitor leitor){
+        if(factory == null)
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        
+        if (em == null) em = factory.createEntityManager();
+        
+        em.getTransaction().begin();
+        em.persist(leitor);
+        em.getTransaction().commit();
+    }
+    
     public static List<Leitor> readAll(){
         List<Leitor> leitor = new ArrayList<>();
         if(factory == null)

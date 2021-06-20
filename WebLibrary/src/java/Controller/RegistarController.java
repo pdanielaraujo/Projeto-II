@@ -5,8 +5,16 @@
  */
 package Controller;
 
+import BLL.LeitorBLL;
+import BLL.UtilizadorBLL;
+import DAL.Leitor;
+import DAL.Utilizador;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -14,6 +22,8 @@ import org.springframework.web.servlet.mvc.AbstractController;
  *
  * @author Pedro
  */
+@Controller
+@RequestMapping(value = "/paginaregistar.htm")
 public class RegistarController extends AbstractController {
     
     public RegistarController() {
@@ -32,8 +42,38 @@ public class RegistarController extends AbstractController {
             String username = request.getParameter("username");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
+            String nome = request.getParameter("nome");
+            String morada = request.getParameter("morada");
+            String dataNascimentoInicial = request.getParameter("dataNascimento");
+                        
+            SimpleDateFormat inputFormatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date data_parsed = (Date) inputFormatter.parse(dataNascimentoInicial);
+            
+            SimpleDateFormat outputFormatter = new SimpleDateFormat("dd-MM-yyyy");
+            String dataNascimentoFinalString = outputFormatter.format(data_parsed);
+            Date dataNascimentoFinal = outputFormatter.parse(dataNascimentoFinalString);
+            
+            
+            Utilizador utilizador = new Utilizador();
+            utilizador.setUsername(username);
+            utilizador.setEmail(email);
+            utilizador.setPassword(password);
+            utilizador.setTipoUtilizador(2);
+            UtilizadorBLL.create(utilizador);
+            Leitor leitor = new Leitor();
+            leitor.setNome(nome);
+            leitor.setMorada(morada);
+            leitor.setDataNascimento(dataNascimentoFinal);
+            leitor.setUtilizadorId(utilizador);
+            LeitorBLL.create(leitor);
+            
+            System.out.println("Utilizador e Leitor criados com sucesso.");
+            
+            response.sendRedirect(request.getContextPath()+"/paginalogin.htm");
+            return new ModelAndView("Login");
         }
-        throw new UnsupportedOperationException("Not yet implemented");
+        //throw new UnsupportedOperationException("Not yet implemented");
+        return new ModelAndView("index");
     }
     
 }

@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import org.eclipse.persistence.sessions.Session;
 
 /**
  *
@@ -36,7 +37,7 @@ public class ExemplarLivroBLL {
         for(Object obj : lstObj){
             ExemplarLivro exemplar = ((ExemplarLivro)obj);
             exemplares.add(exemplar);
-        }        
+        }
         
         return exemplares;
     }
@@ -90,6 +91,7 @@ public class ExemplarLivroBLL {
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         if (em == null) em = factory.createEntityManager();
         
+        
         Query q1 = em.createNamedQuery("ExemplarLivro.updateEstado");
         q1.setParameter("idExemplar", idExemplar);
         q1.setParameter("estadoId", estadoId);
@@ -97,7 +99,6 @@ public class ExemplarLivroBLL {
         q1.executeUpdate();
         //em.merge(q1);
         em.getTransaction().commit();
-        
         
         //return exemplar;
     }

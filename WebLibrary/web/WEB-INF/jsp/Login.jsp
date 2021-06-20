@@ -11,8 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <style>
             .container{
-                margin-left: 10em;
-                margin-top: 10em;
+                margin-left: 10%;
+                margin-top: 10%;
                 width: 35%;
                 background: cornflowerblue;
                 border-radius: 20px;

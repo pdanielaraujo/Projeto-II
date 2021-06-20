@@ -170,7 +170,6 @@ public class LivrosController implements Initializable {
         List<Livro> livros = LivroBLL.readAllWithGenero();
         
         for(Livro livros_ : livros){
-            System.out.println("Livro: " + livros_.getAutorList());
             lista_livros.add(new Livro(livros_.getTitulo(), livros_.getDataPublicacao(), livros_.getEditora(), livros_.getLinguaOficial(), livros_.getGeneroId()));
         }
         

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -18,6 +19,8 @@ import org.springframework.web.servlet.mvc.AbstractController;
  *
  * @author Pedro
  */
+@Controller
+@RequestMapping(value = "/paginalogin.htm")
 public class LoginController extends AbstractController {
     
     public LoginController() {
@@ -28,11 +31,6 @@ public class LoginController extends AbstractController {
             HttpServletResponse response) throws Exception {
         
         boolean isLogged = false;
-        
-        if(isLogged){
-            
-            return new ModelAndView("PaginaInicial");
-        }
         
         if(request.getParameter("submitGoToLogin") != null){
             return new ModelAndView("Login");
@@ -55,13 +53,10 @@ public class LoginController extends AbstractController {
                     // Sessão controlar Login
                     HttpSession session = request.getSession();
                     session.setAttribute("userLogin", isLogged);
-                    System.out.println(session.toString());
+                    session.setAttribute("leitor", user_txt);
                     //return new ModelAndView("PaginaInicial", "cliente", user_txt);
                     //response.sendRedirect("paginainicial.htm");
                     ModelAndView finalModelo = new ModelAndView("PaginaInicial");
-                    finalModelo.addObject("cliente", user_txt);
-                    finalModelo.addObject("loginStatus", isLogged);
-                    request.setAttribute("loginStatus", isLogged);
                     response.sendRedirect(request.getContextPath()+"/paginainicial.htm");
                     return finalModelo;
                 } else{
@@ -74,9 +69,9 @@ public class LoginController extends AbstractController {
                 return new ModelAndView("Login");
             }
         }
+            return new ModelAndView("Login");
         
-        //throw new UnsupportedOperationException("Not yet implemented");
-        return new ModelAndView("PaginaInicial");
+        
     }
     
 }
