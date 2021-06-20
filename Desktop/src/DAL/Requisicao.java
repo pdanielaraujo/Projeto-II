@@ -54,7 +54,7 @@ public class Requisicao implements Serializable {
     private BigDecimal idRequisicao;
     @Basic(optional = false)
     @Column(name = "TEMP_REQ")
-    private BigInteger tempReq;
+    private long tempReq;
     @Basic(optional = false)
     @Column(name = "DATA_REQ")
     @Temporal(TemporalType.TIMESTAMP)
@@ -65,9 +65,6 @@ public class Requisicao implements Serializable {
     private Date dataPrevEntrega;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "requisicaoId")
     private List<Entrega> entregaList;
-    @JoinColumn(name = "BIBLIOTECARIO_ID", referencedColumnName = "ID_BIBLIOTECARIO")
-    @ManyToOne(optional = false)
-    private Bibliotecario bibliotecarioId;
     @JoinColumn(name = "ENTREGA_ID", referencedColumnName = "ID_ENTREGA")
     @ManyToOne
     private Entrega entregaId;
@@ -85,15 +82,24 @@ public class Requisicao implements Serializable {
         this.idRequisicao = idRequisicao;
     }
 
-    public Requisicao(BigDecimal idRequisicao, BigInteger tempReq, Date dataReq, Date dataPrevEntrega) {
+    public Requisicao(BigDecimal idRequisicao, long tempReq, Date dataReq, Date dataPrevEntrega) {
         this.idRequisicao = idRequisicao;
         this.tempReq = tempReq;
         this.dataReq = dataReq;
         this.dataPrevEntrega = dataPrevEntrega;
     }
     
-    public Requisicao(BigDecimal idRequisicao, Leitor leitorId, ExemplarLivro exemplarId, Date dataReq, BigInteger tempReq, Date dataPrevEntrega, Entrega entregaId) {
+    public Requisicao(BigDecimal idRequisicao, Leitor leitorId, ExemplarLivro exemplarId, Date dataReq, long tempReq, Date dataPrevEntrega, Entrega entregaId) {
         this.idRequisicao = idRequisicao;
+        this.leitorId = leitorId;
+        this.exemplarId = exemplarId;
+        this.dataReq = dataReq;
+        this.tempReq = tempReq;
+        this.dataPrevEntrega = dataPrevEntrega;
+        this.entregaId = entregaId;
+    }
+    
+    public Requisicao(Leitor leitorId, ExemplarLivro exemplarId, Date dataReq, long tempReq, Date dataPrevEntrega, Entrega entregaId) {
         this.leitorId = leitorId;
         this.exemplarId = exemplarId;
         this.dataReq = dataReq;
@@ -110,11 +116,11 @@ public class Requisicao implements Serializable {
         this.idRequisicao = idRequisicao;
     }
 
-    public BigInteger getTempReq() {
+    public long getTempReq() {
         return tempReq;
     }
 
-    public void setTempReq(BigInteger tempReq) {
+    public void setTempReq(long tempReq) {
         this.tempReq = tempReq;
     }
 
@@ -142,15 +148,7 @@ public class Requisicao implements Serializable {
     public void setEntregaList(List<Entrega> entregaList) {
         this.entregaList = entregaList;
     }
-
-    public Bibliotecario getBibliotecarioId() {
-        return bibliotecarioId;
-    }
-
-    public void setBibliotecarioId(Bibliotecario bibliotecarioId) {
-        this.bibliotecarioId = bibliotecarioId;
-    }
-
+    
     public Entrega getEntregaId() {
         return entregaId;
     }

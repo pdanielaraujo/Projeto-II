@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -85,12 +87,16 @@ public class ExemplaresController implements Initializable {
     @FXML
     private Button criar_exemplar_btn;
     
+    @FXML
+    private TextField filter_exemplar_txt;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         atualizarTabela();
+        pesquisar();
         preencherCheckBoxEstado();
         preencherCheckBoxLivro();
         preencherCheckBoxLingua();
@@ -115,6 +121,57 @@ public class ExemplaresController implements Initializable {
         col_estado.setCellValueFactory(new PropertyValueFactory<>("estadoId"));
         
         exemplares_table.setItems(lista_exemplares);
+        exemplares_table.setEditable(true);
+    }
+    
+    void pesquisar(){
+        ObservableList<ExemplarLivro> lista_exemplares_pesquisa = FXCollections.observableArrayList();
+        
+        col_idExemplar.setCellValueFactory(new PropertyValueFactory<>("idExemplar"));
+        col_titulo.setCellValueFactory(new PropertyValueFactory<>("livroId"));
+        col_numPag.setCellValueFactory(new PropertyValueFactory<>("numPaginas"));
+        col_lingua.setCellValueFactory(new PropertyValueFactory<>("linguaId"));
+        col_edicao.setCellValueFactory(new PropertyValueFactory<>("edicaoId"));
+        col_estado.setCellValueFactory(new PropertyValueFactory<>("estadoId"));
+        
+        List<ExemplarLivro> exemplares = ExemplarLivroBLL.readAll();
+        
+        for(ExemplarLivro exemplares_ : exemplares){
+            System.out.println("Livro: " + exemplares_.getLivroId());
+            lista_exemplares_pesquisa.add(new ExemplarLivro(exemplares_.getIdExemplar(), exemplares_.getLivroId(), exemplares_.getNumPaginas(), exemplares_.getLinguaId(), exemplares_.getEdicaoId(), exemplares_.getEstadoId()));
+        }
+        
+        exemplares_table.setItems(lista_exemplares_pesquisa);
+        FilteredList<ExemplarLivro> filteredData = new FilteredList<>(lista_exemplares_pesquisa, b -> true);
+        
+        filter_exemplar_txt.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(exemplar -> {
+                
+                if(newValue == null || newValue.isEmpty()){
+                    return true;    
+                }
+                
+                String lowerCaseFilter = newValue.toLowerCase();
+                /*BigDecimal idExemplar_ = exemplar.getIdExemplar();
+                
+                String idExemplarString = idExemplar_.toString();*/
+                if(exemplar.getIdExemplar().toString().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                    return true;
+                } else if(exemplar.getLivroId().toString().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                    return true;
+                } else if(exemplar.getLinguaId().toString().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                    return true;
+                } else if(exemplar.getEdicaoId().toString().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                    return true;
+                } else if(exemplar.getEstadoId().toString().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                    return true;
+                }
+                return false;
+            });
+        });
+        SortedList<ExemplarLivro> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(exemplares_table.comparatorProperty());
+        exemplares_table.setItems(sortedData);
     }
     
     void preencherCheckBoxEstado(){
@@ -180,11 +237,11 @@ public class ExemplaresController implements Initializable {
     
     @FXML
     void atualizarEstado(ActionEvent event){
+        
+        // Obter exemplar selecionada na tabela
         ExemplarLivro exemplar = exemplares_table.getSelectionModel().getSelectedItem();
-        System.out.println(choicebox_estados.getValue());
-        System.out.println(exemplar.getEstadoId());
-        //exemplar.setEstadoId(choicebox_estados.getValue());
-        //BigDecimal estado = choicebox_estados.getValue().getIdEstado();
+        
+        // Atualizar exemplar selecionado
         ExemplarLivroBLL.updateEstado(exemplar.getIdExemplar(), choicebox_estados.getValue());
         exemplares_table.refresh();
         atualizarTabela();

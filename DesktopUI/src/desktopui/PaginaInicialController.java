@@ -5,13 +5,17 @@
  */
 package desktopui;
 
+import DAL.Utilizador;
+import Requisicoes.RequisicoesController;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -50,8 +54,8 @@ public class PaginaInicialController implements Initializable {
         // TODO
     }    
     
-    public void receberUsername(String username){
-        label_teste.setText(username);
+    public void receberUsername(Utilizador username){
+        label_teste.setText(username.getUsername());
     }
     
     @FXML
@@ -62,7 +66,14 @@ public class PaginaInicialController implements Initializable {
     
     @FXML
     void loadRequisicoesPane(ActionEvent event) throws IOException{
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("/Requisicoes/Requisicoes.fxml"));
+        FXMLLoader loaderRequisicoes = new FXMLLoader();
+        //System.out.println(label_teste.getText());
+        String user = label_teste.getText();
+        
+        //AnchorPane pane = loaderRequisicoes.load();
+        AnchorPane pane = loaderRequisicoes.load(getClass().getResource("/Requisicoes/Requisicoes.fxml").openStream());
+        RequisicoesController requisicoesController = loaderRequisicoes.getController();
+        requisicoesController.entregaUpdate(user);
         rootPane.getChildren().setAll(pane);
     }
     

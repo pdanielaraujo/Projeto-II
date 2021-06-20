@@ -55,7 +55,6 @@
          <font>
             <Font size="14.0" />
          </font></Button>
-      <Button fx:id="rmv_livro_btn" layoutX="620.0" layoutY="576.0" mnemonicParsing="false" text="Remover Livro" />
       <TextField fx:id="filter_livro_txt" layoutX="19.0" layoutY="41.0" prefHeight="35.0" prefWidth="370.0" promptText="Search..." AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0">
          <font>
             <Font size="14.0" />

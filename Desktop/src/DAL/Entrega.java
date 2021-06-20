@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Entrega.findAll", query = "SELECT e FROM Entrega e")
     , @NamedQuery(name = "Entrega.findByIdEntrega", query = "SELECT e FROM Entrega e WHERE e.idEntrega = :idEntrega")
     , @NamedQuery(name = "Entrega.findByDataEntrega", query = "SELECT e FROM Entrega e WHERE e.dataEntrega = :dataEntrega")})
+@SequenceGenerator(name="entrega_seq_pk", sequenceName = "entrega_seq_pk", allocationSize = 1, initialValue = 1)
 public class Entrega implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,7 +46,7 @@ public class Entrega implements Serializable {
     @Id
     @Basic(optional = false)
     @Column(name = "ID_ENTREGA")
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq_pk")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="entrega_seq_pk")
     private BigDecimal idEntrega;
     @Basic(optional = false)
     @Column(name = "DATA_ENTREGA")

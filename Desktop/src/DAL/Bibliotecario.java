@@ -40,7 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Bibliotecario.findByIdBibliotecario", query = "SELECT b FROM Bibliotecario b WHERE b.idBibliotecario = :idBibliotecario")
     , @NamedQuery(name = "Bibliotecario.findByNome", query = "SELECT b FROM Bibliotecario b WHERE b.nome = :nome")
     , @NamedQuery(name = "Bibliotecario.findByDataNascimento", query = "SELECT b FROM Bibliotecario b WHERE b.dataNascimento = :dataNascimento")
-    , @NamedQuery(name = "Bibliotecario.findByMorada", query = "SELECT b FROM Bibliotecario b WHERE b.morada = :morada")})
+    , @NamedQuery(name = "Bibliotecario.findByMorada", query = "SELECT b FROM Bibliotecario b WHERE b.morada = :morada")
+    , @NamedQuery(name = "Bibliotecario.findByUtilizador", query = "SELECT b FROM Bibliotecario b INNER JOIN b.utilizadorId u WHERE u.idUtilizador = :idUtilizador")})
 @SequenceGenerator(name="bibliotecario_seq_pk", sequenceName = "bibliotecario_seq_pk", allocationSize = 1, initialValue = 1)
 public class Bibliotecario implements Serializable {
 
@@ -63,8 +64,6 @@ public class Bibliotecario implements Serializable {
     private String morada;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bibliotecarioId")
     private List<Entrega> entregaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bibliotecarioId")
-    private List<Requisicao> requisicaoList;
     @JoinColumn(name = "UTILIZADOR_ID", referencedColumnName = "ID_UTILIZADOR")
     @ManyToOne(optional = false)
     private Utilizador utilizadorId;
@@ -122,15 +121,6 @@ public class Bibliotecario implements Serializable {
 
     public void setEntregaList(List<Entrega> entregaList) {
         this.entregaList = entregaList;
-    }
-
-    @XmlTransient
-    public List<Requisicao> getRequisicaoList() {
-        return requisicaoList;
-    }
-
-    public void setRequisicaoList(List<Requisicao> requisicaoList) {
-        this.requisicaoList = requisicaoList;
     }
 
     public Utilizador getUtilizadorId() {

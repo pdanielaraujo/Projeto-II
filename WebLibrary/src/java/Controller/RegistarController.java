@@ -53,6 +53,8 @@ public class RegistarController extends AbstractController {
             String dataNascimentoFinalString = outputFormatter.format(data_parsed);
             Date dataNascimentoFinal = outputFormatter.parse(dataNascimentoFinalString);
             
+            System.out.println(dataNascimentoFinal);
+            
             
             Utilizador utilizador = new Utilizador();
             utilizador.setUsername(username);

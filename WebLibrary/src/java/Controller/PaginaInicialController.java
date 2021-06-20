@@ -7,13 +7,25 @@ package Controller;
 
 import BLL.EstadoBLL;
 import BLL.ExemplarLivroBLL;
+import BLL.LeitorBLL;
+import BLL.RequisicaoBLL;
 import DAL.Estado;
 import DAL.ExemplarLivro;
+import DAL.Leitor;
+import DAL.Requisicao;
 import DAL.Utilizador;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -50,14 +62,12 @@ public class PaginaInicialController extends AbstractController {
                 lista_estados.toString();
             }
             
-            System.out.println("Estado: " + lista_estados.get(1));
             // Buscar o valor do estado «Requisitado»
             Estado estadoRequisitado = lista_estados.get(1);
             Estado estadoNaoRequisitado = lista_estados.get(2);
             
             // ID do exemplar vem do JSP
             String idExemplar = request.getParameter("idExemplar");
-            System.out.println(idExemplar);
             
             // Transformar o ID em BigDecimal
             BigDecimal exemplarIdBigDecimal = new BigDecimal(idExemplar);
@@ -70,7 +80,42 @@ public class PaginaInicialController extends AbstractController {
             if(exemplar.getEstadoId().equals(estadoNaoRequisitado)){
                 // Se o estado deste exemplar for «Não Requisitado», atualiza o seu estado para «Requisitado»
                 ExemplarLivroBLL.updateEstado(exemplar.getIdExemplar(), estadoRequisitado);
+              
+                // Obter a data atual
+                Date dataAtual = new Date();
+                DateFormat outputFormatDataAtual = new SimpleDateFormat("dd-MM-yyyy");
+                String dataReqFinalString = outputFormatDataAtual.format(dataAtual);
+                Date dataReqFinal = outputFormatDataAtual.parse(dataReqFinalString);
+                
+                // Buscar o tempo de requisição
+                String tempoRequisicaoString = request.getParameter("tempoRequisicao");
+                long tempoRequisicao = Long.valueOf(tempoRequisicaoString);
+                
+                // ID do user que vem do JSP
+                HttpSession session = request.getSession();
+                Utilizador leitorUser = (Utilizador) session.getAttribute("leitor");
+                
+                // Buscar o Leitor com este user ID
+                Leitor leitorReserva = LeitorBLL.read(leitorUser.getIdUtilizador());
+                
+                
+                // Obter a data prevista de entrega, sumando o tempo de requisição à data atual
+                LocalDate date = convertToLocalDateViaInstant(dataReqFinal);
+                LocalDate novaData = date.plusDays(tempoRequisicao);
+                Date dataPrevEntrega = convertToDateViaSqlDate(novaData);
+                String dataPrevEntregaString = outputFormatDataAtual.format(dataPrevEntrega);
+                Date dataPrevEntregaFinal = outputFormatDataAtual.parse(dataPrevEntregaString);
+                
+                // Criar requisição
+                Requisicao requisicao = new Requisicao();
+                requisicao.setLeitorId(leitorReserva);
+                requisicao.setDataReq(dataReqFinal);
+                requisicao.setTempReq(tempoRequisicao);
+                requisicao.setDataPrevEntrega(dataPrevEntregaFinal);
+                requisicao.setExemplarId(exemplar);
+                RequisicaoBLL.create(requisicao);
                 System.out.println("Este livro foi atualizado.");
+                System.out.println("Requisição criada com sucesso.");
             } else if(exemplar.getEstadoId().equals(estadoRequisitado)){
                 System.out.println("Este livro já se encontra requisitado.");
             }
@@ -115,5 +160,15 @@ public class PaginaInicialController extends AbstractController {
             response.sendRedirect(request.getContextPath()+"/index.htm");
             return modelIndex;
         }   
+    }
+    
+    public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant()
+        .atZone(ZoneId.systemDefault())
+        .toLocalDate();
+    }
+    
+    public Date convertToDateViaSqlDate(LocalDate dateToConvert) {
+        return java.sql.Date.valueOf(dateToConvert);
     }
 }

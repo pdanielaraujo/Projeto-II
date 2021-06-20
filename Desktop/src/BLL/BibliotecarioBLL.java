@@ -6,6 +6,7 @@
 package BLL;
 
 import DAL.Bibliotecario;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -52,6 +53,27 @@ public class BibliotecarioBLL {
         
         Query q1 = em.createNamedQuery("Bibliotecario.findByIdBibliotecario");
         q1.setParameter("idbibliotecario", idBibliotecario);
+        Object obj = q1.getSingleResult();
+        
+        if(obj != null){
+            bibliotecario = ((Bibliotecario)obj);
+            //em.merge(cli);
+        }
+        else
+            return null;
+        
+        
+        return bibliotecario;
+    }
+    
+    public static Bibliotecario read(BigDecimal idUtilizador){
+        Bibliotecario bibliotecario = null;
+        if(factory == null)
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        if (em == null) em = factory.createEntityManager();
+        
+        Query q1 = em.createNamedQuery("Bibliotecario.findByUtilizador");
+        q1.setParameter("idUtilizador", idUtilizador);
         Object obj = q1.getSingleResult();
         
         if(obj != null){

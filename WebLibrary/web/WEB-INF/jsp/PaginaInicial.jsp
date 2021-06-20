@@ -157,6 +157,7 @@
                 text-align: center;
                 border-style: none;
                 background: gainsboro;
+                margin-left: 1%;
             }
             .header{
                 display: flex;
@@ -205,6 +206,9 @@
             <div class="product-update">
                 <form method="get" action="paginainicial.htm">
                     <input class="product-text" type="hidden" name="idExemplar" value="${item.idExemplar}">
+                    <label class="label" for="tempoRequisicao"><b>Tempo de requisição</b></label>
+                    <input class="product-text" type="hidden" name="leitor" value="${leitor}">
+                    <input type="text" placeholder="Tempo de requisição" name="tempoRequisicao" required>
                     <input class="inputReservar" type="submit" name="submitReservar" value="Reservar">
                 </form>
             </div>

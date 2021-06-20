@@ -41,6 +41,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @SequenceGenerator(name="exemplarLivro_seq_pk", sequenceName = "exemplarLivro_seq_pk", allocationSize = 1, initialValue = 1)
 public class ExemplarLivro implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "NUM_PAGINAS")
+    private Integer numPaginas;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -48,9 +52,6 @@ public class ExemplarLivro implements Serializable {
     @Column(name = "ID_EXEMPLAR")
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="exemplarLivro_seq_pk")
     private BigDecimal idExemplar;
-    @Basic(optional = false)
-    @Column(name = "NUM_PAGINAS")
-    private Integer numPaginas;
     @JoinColumn(name = "EDICAO_ID", referencedColumnName = "ID_EDICAO")
     @ManyToOne(optional = false)
     private Edicao edicaoId;
@@ -175,7 +176,7 @@ public class ExemplarLivro implements Serializable {
 
     @Override
     public String toString() {
-        return this.getLivroId().getTitulo();
+        //return this.getLivroId().getTitulo();
+        return idExemplar.toString();
     }
-    
 }

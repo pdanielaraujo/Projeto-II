@@ -52,6 +52,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @SequenceGenerator(name="livro_seq_pk", sequenceName = "livro_seq_pk", allocationSize = 1, initialValue = 1)
 public class Livro implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "DISPONIBILIDADE")
+    private short disponibilidade;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -209,6 +213,14 @@ public class Livro implements Serializable {
     @Override
     public String toString() {
         return this.getTitulo();
+    }
+
+    public short getDisponibilidade() {
+        return disponibilidade;
+    }
+
+    public void setDisponibilidade(short disponibilidade) {
+        this.disponibilidade = disponibilidade;
     }
     
 }

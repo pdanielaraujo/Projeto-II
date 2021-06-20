@@ -9,6 +9,7 @@ import BLL.BibliotecarioBLL;
 import BLL.UtilizadorBLL;
 import DAL.Bibliotecario;
 import DAL.Utilizador;
+import Requisicoes.RequisicoesController;
 import desktopui.PaginaInicialController;
 import java.io.IOException;
 import java.net.URL;
@@ -122,11 +123,12 @@ public class LoginBibliotecarioController implements Initializable {
                     System.out.println("Credenciais inseridas corretamente.");
                     try {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/desktopui/PaginaInicial.fxml"));
+                        
                         Parent root = loader.load();
    
                         //The following both lines are the only addition we need to pass the arguments
                         PaginaInicialController pgIniController = loader.getController();
-                        pgIniController.receberUsername(utilizador.getUsername());
+                        pgIniController.receberUsername(username);
                     
                         //stage.setScene(new Scene(root));
                         stage.getScene().setRoot(root);

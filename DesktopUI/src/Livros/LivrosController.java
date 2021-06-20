@@ -78,9 +78,6 @@ public class LivrosController implements Initializable {
     
     @FXML
     private Button criar_livro_btn;
-
-    @FXML
-    private Button rmv_livro_btn;
     
     /**
      * Initializes the controller class.
@@ -153,6 +150,8 @@ public class LivrosController implements Initializable {
                 if(livro.getTitulo().toLowerCase().indexOf(lowerCaseFilter) != -1){
                     return true;
                 } else if(livro.getGeneroId().toString().toLowerCase().indexOf(lowerCaseFilter) != -1){
+                    return true;
+                } else if(livro.getEditora().toString().toLowerCase().indexOf(lowerCaseFilter) != -1){
                     return true;
                 } else if(livro.getLinguaOficial().toLowerCase().indexOf(lowerCaseFilter) != -1){
                     return true;
