@@ -20,6 +20,8 @@ import java.math.BigInteger;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -34,6 +36,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -121,7 +124,6 @@ public class ExemplaresController implements Initializable {
         col_estado.setCellValueFactory(new PropertyValueFactory<>("estadoId"));
         
         exemplares_table.setItems(lista_exemplares);
-        exemplares_table.setEditable(true);
     }
     
     void pesquisar(){
@@ -237,12 +239,14 @@ public class ExemplaresController implements Initializable {
     
     @FXML
     void atualizarEstado(ActionEvent event){
-        
+        col_estado.setEditable(true);
         // Obter exemplar selecionada na tabela
         ExemplarLivro exemplar = exemplares_table.getSelectionModel().getSelectedItem();
         
         // Atualizar exemplar selecionado
         ExemplarLivroBLL.updateEstado(exemplar.getIdExemplar(), choicebox_estados.getValue());
+        
+        //ExemplarLivroBLL.update(exemplar);
         exemplares_table.refresh();
         atualizarTabela();
         

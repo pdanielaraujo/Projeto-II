@@ -5,7 +5,9 @@
  */
 package BLL;
 
+import DAL.Entrega;
 import DAL.Requisicao;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -41,7 +43,24 @@ public class RequisicaoBLL {
         em.getTransaction().begin();
         em.merge(requisicao);
         em.getTransaction().commit();
+    }
+    
+    public static void updateEntrega(BigDecimal idRequisicao, Entrega entregaId){
         
+        if(factory == null)
+            factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        if (em == null) em = factory.createEntityManager();
+        
+        
+        Query q1 = em.createNamedQuery("Requisicao.updateEntrega");
+        q1.setParameter("idRequisicao", idRequisicao);
+        q1.setParameter("entregaId", entregaId);
+        em.getTransaction().begin();
+        q1.executeUpdate();
+        //em.merge(exemplar);
+        em.getTransaction().commit();
+        
+        //return exemplar;
     }
         
     public static Requisicao read(int idRequisicao){

@@ -195,7 +195,7 @@ public class RequisicoesController implements Initializable {
         EntregaBLL.create(entrega);
         
         // Atualização da Requisição
-        RequisicaoBLL.update(requisicao);
+        RequisicaoBLL.updateEntrega(requisicao.getIdRequisicao(), entrega);
         atualizarTabela();
     }
     

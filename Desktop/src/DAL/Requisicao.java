@@ -41,7 +41,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Requisicao.findByIdRequisicao", query = "SELECT r FROM Requisicao r WHERE r.idRequisicao = :idRequisicao")
     , @NamedQuery(name = "Requisicao.findByTempReq", query = "SELECT r FROM Requisicao r WHERE r.tempReq = :tempReq")
     , @NamedQuery(name = "Requisicao.findByDataReq", query = "SELECT r FROM Requisicao r WHERE r.dataReq = :dataReq")
-    , @NamedQuery(name = "Requisicao.findByDataPrevEntrega", query = "SELECT r FROM Requisicao r WHERE r.dataPrevEntrega = :dataPrevEntrega")})
+    , @NamedQuery(name = "Requisicao.findByDataPrevEntrega", query = "SELECT r FROM Requisicao r WHERE r.dataPrevEntrega = :dataPrevEntrega")
+    , @NamedQuery(name = "Requisicao.updateEntrega", query = "UPDATE Requisicao r SET r.entregaId = :entregaId WHERE r.idRequisicao = :idRequisicao")})
 @SequenceGenerator(name="requisicao_seq_pk", sequenceName = "requisicao_seq_pk", allocationSize = 1, initialValue = 1)
 public class Requisicao implements Serializable {
 

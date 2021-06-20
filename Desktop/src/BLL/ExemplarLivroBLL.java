@@ -86,7 +86,6 @@ public class ExemplarLivroBLL {
     
     public static void updateEstado(BigDecimal idExemplar, Estado estadoId){
         
-        ExemplarLivro exemplar = null;
         if(factory == null)
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         if (em == null) em = factory.createEntityManager();
@@ -97,7 +96,7 @@ public class ExemplarLivroBLL {
         q1.setParameter("estadoId", estadoId);
         em.getTransaction().begin();
         q1.executeUpdate();
-        //em.merge(q1);
+        //em.merge(exemplar);
         em.getTransaction().commit();
         
         //return exemplar;
