@@ -60,12 +60,13 @@ public class PaginaInicialController extends AbstractController {
                 //String nomeGenero = generos_.getNome();
                 lista_estados.add(new Estado(estados_.getIdEstado(), estados_.getNome()));
                 lista_estados.toString();
-                System.out.println(estados_.getNome());
             }
             
             // Buscar o valor do estado «Requisitado»
-            Estado estadoRequisitado = lista_estados.get(1);
-            Estado estadoNaoRequisitado = lista_estados.get(2);
+            Estado estadoRequisitado = lista_estados.get(0);
+            Estado estadoNaoRequisitado = lista_estados.get(1);
+            System.out.println("aaa " + lista_estados.get(0));
+            System.out.println("bbb " + lista_estados.get(1));
             
             // ID do exemplar vem do JSP
             String idExemplar = request.getParameter("idExemplar");

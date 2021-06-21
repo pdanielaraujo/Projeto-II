@@ -46,9 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @SequenceGenerator(name="requisicao_seq_pk", sequenceName = "requisicao_seq_pk", allocationSize = 1, initialValue = 1)
 public class Requisicao implements Serializable {
 
-    @Basic(optional = false)
-    @Column(name = "TEMP_REQ")
-    private long tempReq;
+    
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -61,6 +59,9 @@ public class Requisicao implements Serializable {
     @Column(name = "DATA_REQ")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataReq;
+    @Basic(optional = false)
+    @Column(name = "TEMP_REQ")
+    private long tempReq;
     @Basic(optional = false)
     @Column(name = "DATA_PREV_ENTREGA")
     @Temporal(TemporalType.TIMESTAMP)

@@ -124,6 +124,7 @@ public class ExemplaresController implements Initializable {
         col_estado.setCellValueFactory(new PropertyValueFactory<>("estadoId"));
         
         exemplares_table.setItems(lista_exemplares);
+        exemplares_table.refresh();
     }
     
     void pesquisar(){

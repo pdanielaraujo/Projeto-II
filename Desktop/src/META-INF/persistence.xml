@@ -14,6 +14,7 @@
     <class>DAL.Entrega</class>
     <class>DAL.Leitor</class>
     <class>DAL.Estado</class>
+    <class>DAL.LivroAutor</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:1521/firstglobaldb"/>
       <property name="javax.persistence.jdbc.user" value="pdanielaraujo"/>

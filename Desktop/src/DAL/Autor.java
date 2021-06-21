@@ -21,6 +21,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,6 +41,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Autor.findByNome", query = "SELECT a FROM Autor a WHERE a.nome = :nome")
     , @NamedQuery(name = "Autor.findByDataNascimento", query = "SELECT a FROM Autor a WHERE a.dataNascimento = :dataNascimento")})
 public class Autor implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "autor")
+    private List<LivroAutor> livroAutorList;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -141,6 +145,15 @@ public class Autor implements Serializable {
     @Override
     public String toString() {
         return this.getNome();
+    }
+
+    @XmlTransient
+    public List<LivroAutor> getLivroAutorList() {
+        return livroAutorList;
+    }
+
+    public void setLivroAutorList(List<LivroAutor> livroAutorList) {
+        this.livroAutorList = livroAutorList;
     }
     
 }

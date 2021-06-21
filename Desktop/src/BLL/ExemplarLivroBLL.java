@@ -38,6 +38,7 @@ public class ExemplarLivroBLL {
         
         for(Object obj : lstObj){
             ExemplarLivro exemplar = ((ExemplarLivro)obj);
+            em.refresh(exemplar);
             exemplares.add(exemplar);
         }
         

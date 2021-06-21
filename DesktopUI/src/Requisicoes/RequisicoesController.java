@@ -7,10 +7,13 @@ package Requisicoes;
 
 import BLL.BibliotecarioBLL;
 import BLL.EntregaBLL;
+import BLL.EstadoBLL;
+import BLL.ExemplarLivroBLL;
 import BLL.RequisicaoBLL;
 import BLL.UtilizadorBLL;
 import DAL.Bibliotecario;
 import DAL.Entrega;
+import DAL.Estado;
 import DAL.ExemplarLivro;
 import DAL.Leitor;
 import DAL.Requisicao;
@@ -21,6 +24,7 @@ import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -204,6 +208,26 @@ public class RequisicoesController implements Initializable {
         
             // Atualização da Requisição
             RequisicaoBLL.updateEntrega(requisicao.getIdRequisicao(), entrega);
+            
+            // Buscar todos os estados para posteriormente atualizar o estado
+            List<Estado> lista_estados = new ArrayList<>();
+            List<Estado> estados = EstadoBLL.readAll();
+            
+            // Ir buscar todos os estados
+            for(Estado estados_ : estados){
+                //String nomeGenero = generos_.getNome();
+                lista_estados.add(new Estado(estados_.getIdEstado(), estados_.getNome()));
+                lista_estados.toString();
+            }
+            
+            // Buscar o valor dos estados
+            Estado estadoRequisitado = lista_estados.get(0);
+            Estado estadoNaoRequisitado = lista_estados.get(1);
+            
+            // Atualizar estado para «Não Requisitado» depois de criar entrega e atualizara requisição
+            ExemplarLivro exemplar = requisicao.getExemplarId();
+            ExemplarLivroBLL.updateEstado(exemplar.getIdExemplar(), estadoNaoRequisitado);
+            
             requisicoes_table.refresh();
             atualizarTabela();
         }
