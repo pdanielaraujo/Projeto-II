@@ -147,7 +147,7 @@ public class Entrega implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.Entrega[ idEntrega=" + idEntrega + " ]";
+        return "ID: " + idEntrega + " Entregue";
     }
     
 }

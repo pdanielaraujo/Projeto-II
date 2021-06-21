@@ -30,6 +30,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -164,6 +165,8 @@ public class RequisicoesController implements Initializable {
     @FXML
     void confirmarEntrega() throws ParseException{
         
+        Alert alert = new Alert(Alert.AlertType.NONE);
+        
         String username = id_bibliotecario_txt.getText();
         // ID de utilizador do bibliotecario com login
         Utilizador userBibliotecario = UtilizadorBLL.readUsername(username);
@@ -185,18 +188,26 @@ public class RequisicoesController implements Initializable {
         System.out.println(userBibliotecario.getIdUtilizador());
         System.out.println(bibliotecarioId.getNome());
         
+        if(requisicao.getEntregaId() != null){
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Entregas");
+            alert.setHeaderText("Requisição já foi entregue.");
+            alert.show(); 
+        } else{
+            // Criar Entrega
+            Entrega entrega = new Entrega();
+            entrega.setDataEntrega(dataReqFinal);
+            entrega.setRequisicaoId(requisicao);
+            entrega.setLeitorId(requisicao.getLeitorId());
+            entrega.setBibliotecarioId(bibliotecarioId);
+            EntregaBLL.create(entrega);
         
-        // Criar Entrega
-        Entrega entrega = new Entrega();
-        entrega.setDataEntrega(dataReqFinal);
-        entrega.setRequisicaoId(requisicao);
-        entrega.setLeitorId(requisicao.getLeitorId());
-        entrega.setBibliotecarioId(bibliotecarioId);
-        EntregaBLL.create(entrega);
+            // Atualização da Requisição
+            RequisicaoBLL.updateEntrega(requisicao.getIdRequisicao(), entrega);
+            requisicoes_table.refresh();
+            atualizarTabela();
+        }
         
-        // Atualização da Requisição
-        RequisicaoBLL.updateEntrega(requisicao.getIdRequisicao(), entrega);
-        atualizarTabela();
     }
     
     /*
