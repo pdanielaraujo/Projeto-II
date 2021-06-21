@@ -46,6 +46,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @SequenceGenerator(name="requisicao_seq_pk", sequenceName = "requisicao_seq_pk", allocationSize = 1, initialValue = 1)
 public class Requisicao implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "TEMP_REQ")
+    private long tempReq;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -53,9 +57,6 @@ public class Requisicao implements Serializable {
     @Column(name = "ID_REQUISICAO")
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="requisicao_seq_pk")
     private BigDecimal idRequisicao;
-    @Basic(optional = false)
-    @Column(name = "TEMP_REQ")
-    private long tempReq;
     @Basic(optional = false)
     @Column(name = "DATA_REQ")
     @Temporal(TemporalType.TIMESTAMP)
@@ -198,5 +199,4 @@ public class Requisicao implements Serializable {
     public String toString() {
         return "Model.Requisicao[ idRequisicao=" + idRequisicao + " ]";
     }
-    
 }

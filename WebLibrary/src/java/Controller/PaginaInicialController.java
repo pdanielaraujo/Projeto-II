@@ -60,6 +60,7 @@ public class PaginaInicialController extends AbstractController {
                 //String nomeGenero = generos_.getNome();
                 lista_estados.add(new Estado(estados_.getIdEstado(), estados_.getNome()));
                 lista_estados.toString();
+                System.out.println(estados_.getNome());
             }
             
             // Buscar o valor do estado «Requisitado»
@@ -119,17 +120,7 @@ public class PaginaInicialController extends AbstractController {
             } else if(exemplar.getEstadoId().equals(estadoRequisitado)){
                 System.out.println("Este livro já se encontra requisitado.");
             }
-            
-            ArrayList<ExemplarLivro> lista_exemplares = new ArrayList<>();
-            List<ExemplarLivro> exemplares = ExemplarLivroBLL.readAll();
-        
-            for(ExemplarLivro exemplares_ : exemplares){
-                //System.out.println("Livro: " + exemplares_.getAutorList());
-                lista_exemplares.add(new ExemplarLivro(exemplares_.getIdExemplar(), exemplares_.getLivroId(), exemplares_.getNumPaginas(), exemplares_.getLinguaId(), exemplares_.getEdicaoId(), exemplares_.getEstadoId()));
-                lista_exemplares.toString();
-            }
-            
-            finalModelo.addObject("lista", lista_exemplares);
+            response.sendRedirect(request.getContextPath()+"/paginainicial.htm");
             return finalModelo;
         }
         

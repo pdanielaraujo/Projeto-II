@@ -51,16 +51,15 @@ public class RequisicaoBLL {
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         if (em == null) em = factory.createEntityManager();
         
-        
+        Requisicao requisicao = em.find(Requisicao.class, idRequisicao);
         Query q1 = em.createNamedQuery("Requisicao.updateEntrega");
         q1.setParameter("idRequisicao", idRequisicao);
         q1.setParameter("entregaId", entregaId);
         em.getTransaction().begin();
         q1.executeUpdate();
-        //em.merge(exemplar);
+        em.merge(requisicao);
+        em.refresh(requisicao);
         em.getTransaction().commit();
-        
-        //return exemplar;
     }
         
     public static Requisicao read(int idRequisicao){

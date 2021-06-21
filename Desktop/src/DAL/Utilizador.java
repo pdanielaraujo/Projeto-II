@@ -40,8 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @SequenceGenerator(name="utilizador_seq_pk", sequenceName = "utilizador_seq_pk", allocationSize = 1, initialValue = 1)
 public class Utilizador implements Serializable {
 
-    @Column(name = "TIPO_UTILIZADOR")
-    private Integer tipoUtilizador;
+    
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -59,6 +58,8 @@ public class Utilizador implements Serializable {
     @Basic(optional = false)
     @Column(name = "PASSWORD")
     private String password;
+    @Column(name = "TIPO_UTILIZADOR")
+    private Integer tipoUtilizador;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilizadorId")
     private List<Leitor> leitorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilizadorId")
