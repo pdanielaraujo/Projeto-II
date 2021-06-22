@@ -71,43 +71,8 @@ public class LoginBibliotecarioController implements Initializable {
     
     boolean isLogged = false;
     
-    /*void enviarDados(){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/desktopui/PaginaInicial.fxml"));
-            Parent root = loader.load();
-   
-            //The following both lines are the only addition we need to pass the arguments
-            PaginaInicialController pgIniController = loader.getController();
-            pgIniController.receberUsername(username_txt.getText());
-   
-            stage.setScene(new Scene(root));
-            //stage.setTitle("Layout2 + Controller2");
-            stage.show();
-   
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-    }*/
-    
     @FXML
     void criarBibliotecario(ActionEvent event){
-        System.out.println("click do botao");
-        //System.out.println("Data: " + Date.from(Instant.now()));
-        //data_nascimentoLD = data_nascimento_picker.getValue();
-        //System.out.println("data nascimento: " + username_txt.getText());
-//        System.out.println("data nascimento: " + email_txt.getText());
-        //System.out.println("data nascimento: " + password_txt.getText());
-        //System.out.println("data nascimento: " + morada_txt.getText());
-        //LocalDate dataLC = data_nascimento_picker.getValue();
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        //String data_string = dataLC.format(formatter);
-        //LocalDate data_parsed = LocalDate.parse(data_string, formatter);
-        //Date data_nascimento = Date.valueOf(data_parsed);
-        
-        //Date data_nascimentoD = java.sql.Date.valueOf(data_nascimento_picker.getValue());
-        //data_nascimentoLD = data_nascimento_picker.getValue();
-        //System.out.println("data nascimento: " + data_nascimento);
-        
         Alert alert = new Alert(Alert.AlertType.NONE);
         Utilizador utilizador = new Utilizador();
         utilizador.setUsername(username_txt.getText());
@@ -115,62 +80,51 @@ public class LoginBibliotecarioController implements Initializable {
         Utilizador username = UtilizadorBLL.readUsername(utilizador.getUsername());
         
         try{
+            // Se o username e password inseridos existirem na BD
             if(utilizador.getUsername().equals(username.getUsername()) && utilizador.getPassword().equals(username.getPassword())){
-                System.out.println("Credenciais inseridas corretamente.");
+                // Tipo utilizador 1 é Bibliotecário.
                 if(username.getTipoUtilizador() == 1){
                     isLogged = true;
-                    //enviarDados();
-                    System.out.println("Credenciais inseridas corretamente.");
                     try {
+                        // Enviar os dados do utilizador a fazer login para a página inicial
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/desktopui/PaginaInicial.fxml"));
-                        
                         Parent root = loader.load();
    
                         //The following both lines are the only addition we need to pass the arguments
                         PaginaInicialController pgIniController = loader.getController();
                         pgIniController.receberUsername(username);
-                    
-                        //stage.setScene(new Scene(root));
+                        
                         stage.getScene().setRoot(root);
-                        //stage.setTitle("Layout2 + Controller2");
                         stage.show();
-   
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else{
-                    System.out.println("Não tem permissões para entrar na Página.");
+                    username_txt.clear();
+                    password_txt.clear();
                     alert.setAlertType(Alert.AlertType.ERROR);
                     alert.setTitle("Sem Permissões");
                     alert.setHeaderText("Não tem permissões para entrar aqui.");
                     alert.show(); 
                 }
             } else{
-                System.out.println("O username inserido não existe.");
+                System.out.println("Credenciais erradas.");
+                username_txt.clear();
+                password_txt.clear();
                 alert.setAlertType(Alert.AlertType.ERROR);
                 alert.setTitle("Erro");
-                alert.setHeaderText("A palavra-passe inserida está incorreta.");
+                alert.setHeaderText("Credenciais erradas.");
                 alert.show(); 
             }
         } catch(NullPointerException npe){
+            npe.printStackTrace();
             System.out.println("O username inserido não existe.");
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Erro");
-            alert.setHeaderText("O username inserido não existe.");
             username_txt.clear();
             password_txt.clear();
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText("Esta conta não existe.");
             alert.show();
         }
-        
-        System.out.println("Username: " + utilizador.getUsername());
-        System.out.println("Username: " + utilizador.getPassword());
-        //Bibliotecario bibliotecario = new Bibliotecario();
-        //bibliotecario.setNome(nome_txt.getText());
-        //bibliotecario.setMorada(morada_txt.getText());
-        //bibliotecario.setDataNascimento(data_nascimento);
-        //bibliotecario.setUtilizadorId(utilizador);
-        //BibliotecarioBLL.create(bibliotecario);
-        //bibliotecario.setMorada();
-        //bibliotecario.setDataNascimento();
     }
 }

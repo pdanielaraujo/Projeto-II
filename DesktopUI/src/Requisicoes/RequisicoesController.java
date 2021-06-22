@@ -96,7 +96,6 @@ public class RequisicoesController implements Initializable {
         List<Requisicao> requisicoes = RequisicaoBLL.readAll();
         
         for(Requisicao requisicoes_ : requisicoes){
-            System.out.println("requisicao: " + requisicoes_.getIdRequisicao());
             lista_requisicoes.add(new Requisicao(requisicoes_.getIdRequisicao(), requisicoes_.getLeitorId(), requisicoes_.getExemplarId(), requisicoes_.getDataReq(), requisicoes_.getTempReq(), requisicoes_.getDataPrevEntrega(), requisicoes_.getEntregaId()));
             
         }
@@ -126,7 +125,6 @@ public class RequisicoesController implements Initializable {
         List<Requisicao> requisicoes = RequisicaoBLL.readAll();
         
         for(Requisicao requisicoes_ : requisicoes){
-            System.out.println("Livro: " + requisicoes_.getIdRequisicao());
             lista_requisicoes_pesquisa.add(new Requisicao(requisicoes_.getIdRequisicao(), requisicoes_.getLeitorId(), requisicoes_.getExemplarId(), requisicoes_.getDataReq(), requisicoes_.getTempReq(), requisicoes_.getDataPrevEntrega(), requisicoes_.getEntregaId()));
         }
         
@@ -141,9 +139,7 @@ public class RequisicoesController implements Initializable {
                 }
                 
                 String lowerCaseFilter = newValue.toLowerCase();
-                /*BigDecimal idExemplar_ = exemplar.getIdExemplar();
                 
-                String idExemplarString = idExemplar_.toString();*/
                 if(requisicao.getIdRequisicao().toString().toLowerCase().indexOf(lowerCaseFilter) != -1){
                     return true;
                 } else if(requisicao.getLeitorId().toString().toLowerCase().indexOf(lowerCaseFilter) != -1){
@@ -163,7 +159,6 @@ public class RequisicoesController implements Initializable {
     
     public void entregaUpdate(String username){
         id_bibliotecario_txt.setText(username);
-        System.out.println("aaa" + id_bibliotecario_txt.getText());
     }
     
     @FXML
@@ -175,7 +170,7 @@ public class RequisicoesController implements Initializable {
         // ID de utilizador do bibliotecario com login
         Utilizador userBibliotecario = UtilizadorBLL.readUsername(username);
         
-        // Obter o bibliotecario
+        // Obter o bibliotecario através do ID de utilizador
         Bibliotecario bibliotecarioId = BibliotecarioBLL.read(userBibliotecario.getIdUtilizador());
         
         // Obter requisição selecionada na tabela
@@ -186,11 +181,6 @@ public class RequisicoesController implements Initializable {
         DateFormat outputFormatDataAtual = new SimpleDateFormat("dd-MM-yyyy");
         String dataReqFinalString = outputFormatDataAtual.format(dataAtual);
         Date dataReqFinal = outputFormatDataAtual.parse(dataReqFinalString);
-        
-        System.out.println(dataReqFinal);
-        System.out.println(username);
-        System.out.println(userBibliotecario.getIdUtilizador());
-        System.out.println(bibliotecarioId.getNome());
         
         if(requisicao.getEntregaId() != null){
             alert.setAlertType(Alert.AlertType.ERROR);
@@ -230,23 +220,6 @@ public class RequisicoesController implements Initializable {
             
             requisicoes_table.refresh();
             atualizarTabela();
-        }
-        
+        }   
     }
-    
-    /*
-    void atualizarEstado(ActionEvent event){
-        ExemplarLivro exemplar = exemplares_table.getSelectionModel().getSelectedItem();
-        System.out.println(choicebox_estados.getValue());
-        System.out.println(exemplar.getEstadoId());
-        //exemplar.setEstadoId(choicebox_estados.getValue());
-        //BigDecimal estado = choicebox_estados.getValue().getIdEstado();
-        ExemplarLivroBLL.updateEstado(exemplar.getIdExemplar(), choicebox_estados.getValue());
-        exemplares_table.refresh();
-        atualizarTabela();
-        
-        
-        choicebox_estados.setValue(null);
-    }*/
-    
 }

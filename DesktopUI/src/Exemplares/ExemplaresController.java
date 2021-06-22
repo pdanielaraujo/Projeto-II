@@ -111,9 +111,7 @@ public class ExemplaresController implements Initializable {
         List<ExemplarLivro> exemplares = ExemplarLivroBLL.readAll();
         
         for(ExemplarLivro exemplares_ : exemplares){
-            //System.out.println("Livro: " + exemplares_.getAutorList());
             lista_exemplares.add(new ExemplarLivro(exemplares_.getIdExemplar(), exemplares_.getLivroId(), exemplares_.getNumPaginas(), exemplares_.getLinguaId(), exemplares_.getEdicaoId(), exemplares_.getEstadoId()));
-            
         }
         
         col_idExemplar.setCellValueFactory(new PropertyValueFactory<>("idExemplar"));
@@ -140,7 +138,6 @@ public class ExemplaresController implements Initializable {
         List<ExemplarLivro> exemplares = ExemplarLivroBLL.readAll();
         
         for(ExemplarLivro exemplares_ : exemplares){
-            System.out.println("Livro: " + exemplares_.getLivroId());
             lista_exemplares_pesquisa.add(new ExemplarLivro(exemplares_.getIdExemplar(), exemplares_.getLivroId(), exemplares_.getNumPaginas(), exemplares_.getLinguaId(), exemplares_.getEdicaoId(), exemplares_.getEstadoId()));
         }
         
@@ -155,9 +152,7 @@ public class ExemplaresController implements Initializable {
                 }
                 
                 String lowerCaseFilter = newValue.toLowerCase();
-                /*BigDecimal idExemplar_ = exemplar.getIdExemplar();
                 
-                String idExemplarString = idExemplar_.toString();*/
                 if(exemplar.getIdExemplar().toString().toLowerCase().indexOf(lowerCaseFilter) != -1){
                     return true;
                 } else if(exemplar.getLivroId().toString().toLowerCase().indexOf(lowerCaseFilter) != -1){
@@ -178,90 +173,81 @@ public class ExemplaresController implements Initializable {
     }
     
     void preencherCheckBoxEstado(){
-        // Preencher lista de escolhas de género
+        // Preencher lista de escolhas de estado
         ObservableList<Estado> lista_estados = FXCollections.observableArrayList();
         List<Estado> estados = EstadoBLL.readAll();
         
         for(Estado estados_ : estados){
-            //String nomeGenero = generos_.getNome();
             lista_estados.add(new Estado(estados_.getIdEstado(), estados_.getNome()));
             lista_estados.toString();
-            //System.out.println("id: " + generos_.getIdGenero());
-            //System.out.println("genero: " + generos_.getNome());
         }
+        
         choicebox_estados.setItems(lista_estados);
         choicebox_estados_criar.setItems(lista_estados);
     }
     
     void preencherCheckBoxLivro(){
-        // Preencher lista de escolhas de género
+        // Preencher lista de escolhas de livro
         ObservableList<Livro> lista_livros = FXCollections.observableArrayList();
         List<Livro> livros = LivroBLL.readAll();
         
         for(Livro livros_ : livros){
-            //String nomeGenero = generos_.getNome();
             lista_livros.add(new Livro(livros_.getIdLivro(), livros_.getTitulo()));
             lista_livros.toString();
-            //System.out.println("id: " + generos_.getIdGenero());
-            //System.out.println("genero: " + generos_.getNome());
         }
+        
         choicebox_livros.setItems(lista_livros);
     }
     
     void preencherCheckBoxLingua(){
-        // Preencher lista de escolhas de género
+        // Preencher lista de escolhas de língua
         ObservableList<Lingua> lista_linguas = FXCollections.observableArrayList();
         List<Lingua> linguas = LinguaBLL.readAll();
         
         for(Lingua linguas_ : linguas){
-            //String nomeGenero = generos_.getNome();
             lista_linguas.add(new Lingua(linguas_.getIdLingua(), linguas_.getNome()));
             lista_linguas.toString();
-            //System.out.println("id: " + generos_.getIdGenero());
-            //System.out.println("genero: " + generos_.getNome());
         }
+        
         choicebox_linguas.setItems(lista_linguas);
     }
     
     void preencherCheckBoxEdicao(){
-        // Preencher lista de escolhas de género
+        // Preencher lista de escolhas de edição
         ObservableList<Edicao> lista_edicoes = FXCollections.observableArrayList();
         List<Edicao> edicoes = EdicaoBLL.readAll();
         
         for(Edicao edicoes_ : edicoes){
-            //String nomeGenero = generos_.getNome();
             lista_edicoes.add(new Edicao(edicoes_.getIdEdicao(), edicoes_.getNome()));
             lista_edicoes.toString();
-            //System.out.println("id: " + generos_.getIdGenero());
-            //System.out.println("genero: " + generos_.getNome());
         }
+        
         choicebox_edicoes.setItems(lista_edicoes);
     }
     
     @FXML
     void atualizarEstado(ActionEvent event){
         col_estado.setEditable(true);
+        
         // Obter exemplar selecionada na tabela
         ExemplarLivro exemplar = exemplares_table.getSelectionModel().getSelectedItem();
         
         // Atualizar exemplar selecionado
         ExemplarLivroBLL.updateEstado(exemplar.getIdExemplar(), choicebox_estados.getValue());
         
-        //ExemplarLivroBLL.update(exemplar);
         exemplares_table.refresh();
         atualizarTabela();
         
-        
+        // Resetar a choicebox
         choicebox_estados.setValue(null);
     }
     
     @FXML
     void criarExemplar(ActionEvent event){
-        System.out.println("click do botao");
         
         Integer num_paginas = Integer.parseInt(paginas_txt.getText());
         
-        Alert alert = new Alert(Alert.AlertType.NONE);
+        // Criar exemplar
         ExemplarLivro exemplar = new ExemplarLivro();
         exemplar.setLivroId(choicebox_livros.getValue());
         exemplar.setNumPaginas(num_paginas);
@@ -269,7 +255,10 @@ public class ExemplaresController implements Initializable {
         exemplar.setEdicaoId(choicebox_edicoes.getValue());
         exemplar.setEstadoId(choicebox_estados_criar.getValue());
         ExemplarLivroBLL.create(exemplar);
+        
         atualizarTabela();
+        
+        // Resetar as choice boxes e limpar os texts inputs
         paginas_txt.clear();
         choicebox_livros.setValue(null);
         choicebox_linguas.setValue(null);

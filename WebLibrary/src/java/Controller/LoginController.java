@@ -44,7 +44,8 @@ public class LoginController extends AbstractController {
             utilizador.setPassword(password);
             Utilizador user_txt = UtilizadorBLL.readUsername(utilizador.getUsername());
             
-            if(utilizador.getUsername().equals(user_txt.getUsername()) && utilizador.getPassword().equals(user_txt.getPassword())){
+            try{
+                if(utilizador.getUsername().equals(user_txt.getUsername()) && utilizador.getPassword().equals(user_txt.getPassword())){
                 
                 // Tipo utilizador 2 é Leitor.
                 if(user_txt.getTipoUtilizador() == 2){
@@ -64,14 +65,15 @@ public class LoginController extends AbstractController {
                     return new ModelAndView("Login");
                 }
                 
-            } else{
-                System.out.println("Credenciais Erradas.");
+                } else{
+                    System.out.println("Credenciais Erradas.");
+                    return new ModelAndView("Login");
+                }
+            }catch(NullPointerException npe){
+                npe.printStackTrace();
                 return new ModelAndView("Login");
             }
         }
             return new ModelAndView("Login");
-        
-        
-    }
-    
+    } 
 }
