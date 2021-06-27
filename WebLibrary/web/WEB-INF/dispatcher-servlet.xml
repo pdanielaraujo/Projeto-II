@@ -56,9 +56,12 @@
     <!--
     The index controller.
     -->
-    <bean name="indexController"
+    <!--<bean name="indexController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-          p:viewName="index" />
+          p:viewName="index" />-->
+    
+    <bean name="indexController"
+          class="Controller.IndexController"/>
     
     <!--
     The login controller.

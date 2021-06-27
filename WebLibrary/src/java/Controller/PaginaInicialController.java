@@ -44,112 +44,11 @@ public class PaginaInicialController extends AbstractController {
     
     public PaginaInicialController() {
     }
-    ModelAndView finalModelo = new ModelAndView("PaginaInicial");
     
-    protected ModelAndView handleRequestInternal(
-            HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-        
-        //boolean isLogged = Boolean.parseBoolean(request.getParameter("loginStatus"));
-        try{
-            HttpSession session = request.getSession();
-            boolean isLogged = (boolean) session.getAttribute("userLogin");
-            
-            if(isLogged){
-                ArrayList<ExemplarLivro> lista_exemplares = new ArrayList<>();
-                List<ExemplarLivro> exemplares = ExemplarLivroBLL.readAll();
-        
-                for(ExemplarLivro exemplares_ : exemplares){
-                    //System.out.println("Livro: " + exemplares_.getAutorList());
-                    lista_exemplares.add(new ExemplarLivro(exemplares_.getIdExemplar(), exemplares_.getLivroId(), exemplares_.getNumPaginas(), exemplares_.getLinguaId(), exemplares_.getEdicaoId(), exemplares_.getEstadoId()));
-                    lista_exemplares.toString();
-                }
-                
-                if(request.getParameter("submitReservar") != null){
-
-                    List<Estado> lista_estados = new ArrayList<>();
-                    List<Estado> estados = EstadoBLL.readAll();
-            
-                    // Ir buscar todos os estados
-                    for(Estado estados_ : estados){
-                        //String nomeGenero = generos_.getNome();
-                        lista_estados.add(new Estado(estados_.getIdEstado(), estados_.getNome()));
-                        lista_estados.toString();
-                    }
-            
-                    // Buscar o valor do estado «Requisitado»
-                    Estado estadoRequisitado = lista_estados.get(0);
-                    Estado estadoNaoRequisitado = lista_estados.get(1);
-            
-                    // ID do exemplar vem do JSP
-                    String idExemplar = request.getParameter("idExemplar");
-            
-                    // Transformar o ID em BigDecimal
-                    BigDecimal exemplarIdBigDecimal = new BigDecimal(idExemplar);
-            
-                    // Buscar o exemplar com esse ID
-                    ExemplarLivro exemplar = ExemplarLivroBLL.read(exemplarIdBigDecimal);
-                    Estado estadoJSP = exemplar.getEstadoId();
-            
-                    // 3 é o estado «Não Requisitado»
-                    if(exemplar.getEstadoId().equals(estadoNaoRequisitado)){
-                        // Se o estado deste exemplar for «Não Requisitado», atualiza o seu estado para «Requisitado»
-                        ExemplarLivroBLL.updateEstado(exemplar.getIdExemplar(), estadoRequisitado);
-              
-                        // Obter a data atual
-                        Date dataAtual = new Date();
-                        DateFormat outputFormatDataAtual = new SimpleDateFormat("dd-MM-yyyy");
-                        String dataReqFinalString = outputFormatDataAtual.format(dataAtual);
-                        Date dataReqFinal = outputFormatDataAtual.parse(dataReqFinalString);
-                
-                        // Buscar o tempo de requisição
-                        String tempoRequisicaoString = request.getParameter("tempoRequisicao");
-                        long tempoRequisicao = Long.valueOf(tempoRequisicaoString);
-                
-                        // ID do user que vem do JSP
-                        Utilizador leitorUser = (Utilizador) session.getAttribute("leitor");
-                
-                        // Buscar o Leitor com este user ID
-                        Leitor leitorReserva = LeitorBLL.read(leitorUser.getIdUtilizador());
-                
-                
-                        // Obter a data prevista de entrega, sumando o tempo de requisição à data atual
-                        LocalDate date = convertToLocalDateViaInstant(dataReqFinal);
-                        LocalDate novaData = date.plusDays(tempoRequisicao);
-                        Date dataPrevEntrega = convertToDateViaSqlDate(novaData);
-                        String dataPrevEntregaString = outputFormatDataAtual.format(dataPrevEntrega);
-                        Date dataPrevEntregaFinal = outputFormatDataAtual.parse(dataPrevEntregaString);
-                
-                        // Criar requisição
-                        Requisicao requisicao = new Requisicao();
-                        requisicao.setLeitorId(leitorReserva);
-                        requisicao.setDataReq(dataReqFinal);
-                        requisicao.setTempReq(tempoRequisicao);
-                        requisicao.setDataPrevEntrega(dataPrevEntregaFinal);
-                        requisicao.setExemplarId(exemplar);
-                        RequisicaoBLL.create(requisicao);
-                        System.out.println("Este livro foi atualizado.");
-                        System.out.println("Requisição criada com sucesso.");
-                    } else if(exemplar.getEstadoId().equals(estadoRequisitado)){
-                        System.out.println("Este livro já se encontra requisitado.");
-                    }
-                    response.sendRedirect(request.getContextPath()+"/paginainicial.htm");
-                    return finalModelo;
-                }
-            
-                finalModelo.addObject("lista", lista_exemplares);
-                return finalModelo;
-            } else {
-                ModelAndView modelIndex = new ModelAndView("index");
-                response.sendRedirect(request.getContextPath()+"/index.htm");
-                return modelIndex;
-            }
-        }catch(NullPointerException npe){
-            ModelAndView modelIndex = new ModelAndView("index");
-            response.sendRedirect(request.getContextPath()+"/index.htm");
-            return modelIndex;
-        }   
-    }
+    ModelAndView finalLogin = new ModelAndView("Login");
+    ModelAndView finalRegister = new ModelAndView("Registar");
+    ModelAndView finalIndex = new ModelAndView("index");
+    ModelAndView finalPaginaInicial = new ModelAndView("PaginaInicial");
     
     public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
         return dateToConvert.toInstant()
@@ -159,5 +58,115 @@ public class PaginaInicialController extends AbstractController {
     
     public Date convertToDateViaSqlDate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
+    }
+    
+    protected ModelAndView handleRequestInternal(
+            HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        
+            HttpSession session = request.getSession();
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            
+            try{
+                boolean isLogged = (boolean) session.getAttribute("userLogin");
+                if(isLogged){
+                    ArrayList<ExemplarLivro> lista_exemplares = new ArrayList<>();
+                    List<ExemplarLivro> exemplares = ExemplarLivroBLL.readAll();
+        
+                    for(ExemplarLivro exemplares_ : exemplares){
+                        //System.out.println("Livro: " + exemplares_.getAutorList());
+                        lista_exemplares.add(new ExemplarLivro(exemplares_.getIdExemplar(), exemplares_.getLivroId(), exemplares_.getNumPaginas(), exemplares_.getLinguaId(), exemplares_.getEdicaoId(), exemplares_.getEstadoId()));
+                        lista_exemplares.toString();
+                    }
+                
+                    if(request.getParameter("submitLogout") != null){
+                        isLogged = false;
+                        session.setAttribute("userLogin", isLogged);
+                        response.sendRedirect(request.getContextPath()+"/paginainicial.htm");
+                        return finalIndex;
+                    }
+                
+                    if(request.getParameter("submitReservar") != null){
+
+                        List<Estado> lista_estados = new ArrayList<>();
+                        List<Estado> estados = EstadoBLL.readAll();
+            
+                        // Ir buscar todos os estados
+                        for(Estado estados_ : estados){
+                            //String nomeGenero = generos_.getNome();
+                            lista_estados.add(new Estado(estados_.getIdEstado(), estados_.getNome()));
+                            lista_estados.toString();
+                        }
+            
+                        // Buscar o valor do estado «Requisitado»
+                        Estado estadoRequisitado = lista_estados.get(0);
+                        Estado estadoNaoRequisitado = lista_estados.get(1);
+            
+                        // ID do exemplar vem do JSP
+                        String idExemplar = request.getParameter("idExemplar");
+            
+                        // Transformar o ID em BigDecimal
+                        BigDecimal exemplarIdBigDecimal = new BigDecimal(idExemplar);
+            
+                        // Buscar o exemplar com esse ID
+                        ExemplarLivro exemplar = ExemplarLivroBLL.read(exemplarIdBigDecimal);
+                        Estado estadoJSP = exemplar.getEstadoId();
+            
+                        // 3 é o estado «Não Requisitado»
+                        if(exemplar.getEstadoId().equals(estadoNaoRequisitado)){
+                            // Se o estado deste exemplar for «Não Requisitado», atualiza o seu estado para «Requisitado»
+                            ExemplarLivroBLL.updateEstado(exemplar.getIdExemplar(), estadoRequisitado);
+              
+                            // Obter a data atual
+                            Date dataAtual = new Date();
+                            DateFormat outputFormatDataAtual = new SimpleDateFormat("dd-MM-yyyy");
+                            String dataReqFinalString = outputFormatDataAtual.format(dataAtual);
+                            Date dataReqFinal = outputFormatDataAtual.parse(dataReqFinalString);
+                
+                            // Buscar o tempo de requisição
+                            String tempoRequisicaoString = request.getParameter("tempoRequisicao");
+                            long tempoRequisicao = Long.valueOf(tempoRequisicaoString);
+                
+                            // ID do user que vem do JSP
+                            Utilizador leitorUser = (Utilizador) session.getAttribute("leitor");
+                
+                            // Buscar o Leitor com este user ID
+                            Leitor leitorReserva = LeitorBLL.read(leitorUser.getIdUtilizador());
+                
+                
+                            // Obter a data prevista de entrega, sumando o tempo de requisição à data atual
+                            LocalDate date = convertToLocalDateViaInstant(dataReqFinal);
+                            LocalDate novaData = date.plusDays(tempoRequisicao);
+                            Date dataPrevEntrega = convertToDateViaSqlDate(novaData);
+                            String dataPrevEntregaString = outputFormatDataAtual.format(dataPrevEntrega);
+                            Date dataPrevEntregaFinal = outputFormatDataAtual.parse(dataPrevEntregaString);
+                
+                            // Criar requisição
+                            Requisicao requisicao = new Requisicao();
+                            requisicao.setLeitorId(leitorReserva);
+                            requisicao.setDataReq(dataReqFinal);
+                            requisicao.setTempReq(tempoRequisicao);
+                            requisicao.setDataPrevEntrega(dataPrevEntregaFinal);
+                            requisicao.setExemplarId(exemplar);
+                            RequisicaoBLL.create(requisicao);
+                            System.out.println("Este livro foi atualizado.");
+                            System.out.println("Requisição criada com sucesso.");
+                        } else if(exemplar.getEstadoId().equals(estadoRequisitado)){
+                            System.out.println("Este livro já se encontra requisitado.");
+                        }
+                        response.sendRedirect(request.getContextPath()+"/paginainicial.htm");
+                        return finalPaginaInicial;
+                    }
+            
+                    finalPaginaInicial.addObject("lista", lista_exemplares);
+                    return finalPaginaInicial;
+                } else {
+                    response.sendRedirect(request.getContextPath()+"/index.htm");
+                    return finalIndex;
+                }
+            }catch(NullPointerException npe){
+                response.sendRedirect(request.getContextPath()+"/index.htm");
+                return finalIndex;
+            }
     }
 }

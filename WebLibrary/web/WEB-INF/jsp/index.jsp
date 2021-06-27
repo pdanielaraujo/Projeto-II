@@ -14,25 +14,62 @@
             }
             .box{
                 display: flex;
-                width: 40em;
-                margin-left: 15em;
+                width: 30%;
+                margin-left: 13%;
+            }
+            .container{
+                margin-left: 10%;
+                margin-top: 10%;
+                width: 25%;
+                background: cornflowerblue;
+                border-radius: 20px;
+                padding: 30px;
+            }
+            .button{
+                display: flex;
+                flex-direction: row;
+                padding: 50px;
+            }
+            .welcome_title{
+                padding-left: 10px;
+                font-family: Arial;
+                font-weight: lighter;
+                color: white;
+            }
+            .input_btn{
+                border-radius: 5px;
+                margin-top: 20px;
+                height: 30px;
+                align-self: center;
+                font-size: 18px;
+                font-weight: lighter;
+                font-family: Arial;
+                text-align: center;
+                border-style: none;
+                width: 100%;
+                cursor: pointer;
+            }
+            .container_form{
+                display: flex;
             }
         </style>
         <title>Biblioteca - Inicie Sessão ou Registe-se</title>
     </head>
 
     <body>
-        <p>Hello! This is the default welcome page for a Spring Web MVC project.</p>
-        <div style="margin-left: 15em; margin-top: 15em; color: ">
-            <h1>Bem vindo à nossa Biblioteca</h1>
-        </div>
-        <div class="box">
-            <form class="button" method="post" action="paginalogin.htm">
-                <input type="submit" name="submitGoToLogin" value="Entrar">
-            </form>
-            <form class="button" method="post" action="paginaregistar.htm">
-                <input type="submit" name="submitGoToRegister" value="Criar Conta">
-            </form>
+        <div class="container">
+            <div class="welcome_title">
+                <h1>Bem vindo à nossa Biblioteca</h1>
+            </div>
+            <div class="container_form">
+                <form class="box" method="post" action="index.htm">
+                    <input class="input_btn" type="submit" name="submitGoToLogin" value="Entrar">
+                </form>
+                <form class="box" method="post" action="index.htm">
+                    <input class="input_btn" type="submit" name="submitGoToRegister" value="Criar Conta">
+                </form>
+            </div>
+            
         </div>
     </body>
 </html>

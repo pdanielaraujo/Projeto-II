@@ -58,7 +58,7 @@
 
         .search-area {
             float: left;
-            width: 60%;
+            width: 40%;
             margin-left: 10%;
             margin-right: 10%;
         }
@@ -159,18 +159,31 @@
                 background: gainsboro;
                 margin-left: 1%;
             }
+            
+            .inputLogout{
+                cursor: pointer;
+                border-radius: 5px;
+                height: 30px;
+                font-size: 18px;
+                font-weight: lighter;
+                font-family: Arial;
+                text-align: center;
+                border-style: none;
+                background: gainsboro;
+                width: 100%;
+            }
             .header{
                 display: flex;
                 flex-flow: row-reverse;
                 width: 100%;
             }
-            .loggedTitle{
-                margin-left: auto;
-                margin-right: 1%;
-            }
             .siteTitle{
-                margin-left: 1%;
+                margin-left: 2%;
                 margin-right: auto;
+            }
+            #logout{
+                width: 5%;
+                padding: 1%;
             }
         </style>
     </head>
@@ -180,7 +193,11 @@
             <input class="input_btn" type="submit" name="submitver" value="Ver">
         </form>-->
     <div class="header">
-        <h3 class="loggedTitle"> Bem Vindo ${leitor.username}!</h3>
+        <form id="logout" method="post" action="paginainicial.htm">
+            <input class="inputLogout" type="submit" name="submitLogout" value="Sair">
+        </form>
+        
+        <h3 class="loggedTitle"> Sessão iniciada em, ${leitor.username}!</h3>
         <div class="tools">
             <div class="search-area">
             <input type="text" id="search" placeholder="Search" />

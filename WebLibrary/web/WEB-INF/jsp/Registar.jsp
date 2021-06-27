@@ -10,6 +10,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <style>
+            body{
+                background-image: url("resources/bibliotecaBK.png");
+                background-size: cover;
+                background-repeat: no-repeat;
+                margin: 0px;
+            }
             .container{
                 margin-left: 10%;
                 margin-top: 5%;
@@ -56,6 +62,14 @@
                 font-family: Arial;
                 text-align: center;
                 border-style: none;
+                cursor: pointer;
+            }
+            a{
+                margin-left: 2%;
+                text-decoration: none;
+                color: aliceblue;
+                font-family: Arial;
+                font-size: 14px;
             }
         </style>
         <title>Biblioteca - Registe-se</title>
@@ -81,6 +95,8 @@
                 
                 <label class="label" for="dataNascimento"><b>Data Nascimento</b></label>
                 <input class="input_txt" type="date" placeholder="Birth date" name="dataNascimento" required>
+                
+                <a href="paginalogin.htm">Já tenho uma conta criada.</a>
 
                 <input class="input_btn" type="submit" name="submitRegister" value="Criar Conta">
             </form>

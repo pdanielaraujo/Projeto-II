@@ -146,8 +146,6 @@ public class RequisicoesController implements Initializable {
                     return true;
                 } else if(requisicao.getExemplarId().toString().toLowerCase().indexOf(lowerCaseFilter) != -1){
                     return true;
-                } else if(requisicao.getEntregaId().toString().toLowerCase().indexOf(lowerCaseFilter) != -1){
-                    return true;
                 }
                 return false;
             });
